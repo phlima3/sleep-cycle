@@ -1,0 +1,337 @@
+{
+  "app": {
+    "name": "Schlafzyklusrechner"
+  },
+  "home": {
+    "title": "Schlafzyklusrechner",
+    "calculate": {
+      "title": "Berechnen Sie Ihre Schlafzyklen",
+      "description": "Betreten Sie Ihre Schlafenszeit und Ihre Weckzeit, um Ihren Schlaf zu optimieren",
+      "bedtime_question": "Wann planen Sie ins Bett zu gehen?",
+      "wakeup_question": "Wann möchten Sie aufwachen?",
+      "latency_label": "Schlaflatenz: {{minutes}} Minuten",
+      "latency_description": "Durchschnittliche Zeit, die Sie zum Einschlafen benötigen",
+      "calculate_button": "Schlafzyklen berechnen"
+    },
+    "calculation_types": {
+      "normal": "Normal",
+      "from_bedtime": "Aus dem Schlafengehen",
+      "from_wakeup": "Vom Aufwachen"
+    },
+    "errors": {
+      "missing_times": {
+        "title": "Fehlende Zeiten",
+        "description": "Bitte betreten Sie die Schlafenszeit und die Weckzeit"
+      },
+      "calculation_error": {
+        "title": "Berechnungsfehler",
+        "description": "Es gab ein Problem, Ihre Schlafzyklen zu berechnen."
+      }
+    }
+  },
+  "history": {
+    "title": "Schlafgeschichte",
+    "empty_state": "Noch keine Schlafgeschichte verfügbar. ",
+    "filters": {
+      "time_range": {
+        "week": "Woche",
+        "month": "Monat",
+        "all": "Alle"
+      },
+      "chart_type": {
+        "bar": "Bar",
+        "line": "Linie"
+      }
+    },
+    "patterns": {
+      "title": "Schlafmuster",
+      "description": "Visualisieren Sie Ihre Schlafzyklen und Ihre Dauer im Laufe der Zeit",
+      "tabs": {
+        "cycles": "Schlafzyklen",
+        "duration": "Schlafdauer"
+      },
+      "charts": {
+        "cycles": {
+          "name": "Schlafzyklen",
+          "y_axis": "Anzahl der Zyklen"
+        },
+        "duration": {
+          "name": "Schlafdauer (Stunden)",
+          "y_axis": "Std"
+        }
+      }
+    },
+    "recent_data": {
+      "title": "Aktuelle Schlafdaten",
+      "description": "Details Ihrer letzten Schlafberechnungen",
+      "table": {
+        "headers": {
+          "date": "Datum",
+          "bedtime": "Schlafenszeit",
+          "wakeup": "Aufwachen",
+          "cycles": "Zyklen",
+          "ideal_bedtime": "Ideales Schlafenszeit"
+        }
+      }
+    }
+  },
+  "results": {
+    "title": "Schlafzyklusergebnisse",
+    "summary": "Schlafzusammenfassung",
+    "based_on": "Basierend auf Ihrer Schlafenszeit bei {{bedtime}} und aufwachen bei {{wakeup}}",
+    "total_duration": "Gesamtschlafdauer",
+    "sleep_cycles": "Schlafzyklen",
+    "complete_cycles": "{{complete}} vollständig + {{partial}}% eines Zyklus",
+    "quality": {
+      "title": "Bewertung der Schlafqualität",
+      "poor": "Arm",
+      "adequate": "Angemessen",
+      "good": "Gut",
+      "excellent": "Exzellent"
+    },
+    "suggestion": {
+      "title": "Verbesserungsvorschlag",
+      "need_more": "Für einen optimalen Schlaf gehen Sie in Betracht {{time}} 5 volle Schlafzyklen abschließen.",
+      "optimal": "Sie erhalten bereits eine optimale Menge an Schlafzyklen. "
+    },
+    "ideal_bedtimes": "Ideale Bettzeiten",
+    "for_wakeup": "Für Ihre Weckzeit bei {{time}}",
+    "ideal_wakeuptimes": "Ideale Weckzeiten",
+    "for_bedtime": "Für Ihre Schlafenszeit bei {{time}}",
+    "cycles": "{{count}} Schlafzyklen",
+    "actions": {
+      "select": "Wählen",
+      "new_calculation": "Neue Berechnung",
+      "remind_me": "Erinnere mich"
+    },
+    "notification": {
+      "scheduled": "Benachrichtigung geplant",
+      "reminder_info": "Sie werden 30 Minuten vor Ihrer idealen Schlafenszeit benachrichtigt ({{time}})"
+    }
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "sleep_preferences": {
+      "title": "Schlafpräferenzen",
+      "description": "Passen Sie Ihre Schlafzyklusberechnungsparameter an",
+      "cycle_length": "Schlafzykluslänge",
+      "minutes": "{{count}} Minuten",
+      "cycle_info": "Der Standard -Schlafzyklus beträgt 90 Minuten, kann jedoch zwischen Individuen variieren",
+      "latency": "Schlaflatenz (Zeit zum Einschlafen)",
+      "latency_info": "Wie lange es normalerweise braucht, um nach dem Schlafengehen einzuschlafen?"
+    },
+    "app_preferences": {
+      "title": "App -Einstellungen",
+      "description": "Passen Sie Ihre App -Erfahrung an",
+      "dark_mode": "Dunkler Modus",
+      "theme_info": "Wechseln Sie zwischen hellen und dunklen Themen",
+      "reminders": "Schlafinnerungen",
+      "reminders_info": "Erhalten Sie Benachrichtigungen für Ihre ideale Schlafenszeit",
+      "language": "Sprache"
+    },
+    "data_management": {
+      "title": "Datenverwaltung",
+      "description": "Verwalten Sie Ihre gespeicherten Daten",
+      "clear_history": "Klare Schlafgeschichte"
+    },
+    "save_button": "Einstellungen speichern",
+    "notifications": {
+      "enabled": "Benachrichtigungen aktiviert",
+      "enabled_description": "Auf Anfrage erhalten Sie jetzt Schlaf -Erinnerungen",
+      "disabled": "Benachrichtigungen deaktiviert",
+      "disabled_description": "Sie werden keine Schlaf -Erinnerungen mehr erhalten",
+      "permission_denied": "Zugriff verweigert",
+      "permission_denied_description": "Die Benachrichtigungsgenehmigung wurde nicht erteilt",
+      "settings_saved": "Einstellungen gespeichert",
+      "settings_saved_description": "Ihre Vorlieben wurden aktualisiert",
+      "history_cleared": "Geschichte geklärt",
+      "history_cleared_description": "Ihre Schlafgeschichte wurde vollständig gelöscht"
+    }
+  },
+  "navbar": {
+    "home": "Heim",
+    "history": "Geschichte",
+    "about": "Um",
+    "sleep_tips": "Schlaftipps",
+    "settings": "Einstellungen"
+  },
+  "about": {
+    "title": "Über Schlafzyklen",
+    "understanding": {
+      "title": "Schlafzyklen verstehen",
+      "description": "Die Wissenschaft hinter Schlafstadien und Zyklen",
+      "intro": "Der Schlaf ist kein einheitlicher Zustand, sondern besteht aus verschiedenen Stadien, die sich die ganze Nacht über in Zyklen wiederholen. ",
+      "stages_title": "Die Schlafstadien",
+      "stages": {
+        "light": {
+          "title": "Leichter Schlaf (N1 & N2)",
+          "description": "Die Eingangsphasen, in denen Sie leicht geweckt werden können. "
+        },
+        "deep": {
+          "title": "Tiefer Schlaf (N3)",
+          "description": "Auch als langsamer Schlaf bekannt, repariert Ihr Körper Gewebe, baut Knochen und Muskeln auf und stärkt das Immunsystem."
+        },
+        "rem": {
+          "title": "Rem Schlaf",
+          "description": "Wenn die meisten Träume auftreten. "
+        }
+      },
+      "cycle_changes": "Während der Nacht fahren Sie diese Stufen mehrmals durch, wobei jeder Zyklus ungefähr 90 Minuten dauert. ",
+      "cycle_points": {
+        "early": "Frühe Zyklen enthalten mehr tiefe Schlaf (N3)",
+        "late": "Spätere Zyklen enthalten mehr REM -Schlaf",
+        "waking": "Das Aufwachen während des leichten Schlafes (N1 oder N2) fühlt sich erfrischter an als im tiefen Schlaf"
+      },
+      "importance_title": "Warum Schlafzyklen wichtig sind",
+      "importance": {
+        "aligning": "Wenn Sie Ihre Weckzeit mit dem Ende eines Schlafzyklus ausrichten, können Sie sich erfrischter fühlen. ",
+        "planning": "Durch die Berechnung Ihrer Schlafzyklen können Sie Ihre Schlafenszeit oder Ihre Weckzeit planen, um mit der Fertigstellung eines vollständigen Zyklus übereinzustimmen und möglicherweise einfacher aufzuwachen und wachsamer zu fühlen."
+      }
+    },
+    "research": {
+      "title": "Forschung und akademische Studien",
+      "description": "Wissenschaftlicher Hintergrund zu Schlafzyklen",
+      "studies": {
+        "duration": {
+          "title": "Schlafzyklusdauer Forschung",
+          "content": "Während die häufig zitierte Dauer eines Schlafzyklus 90 Minuten beträgt, hat die Forschung gezeigt, dass dies in verschiedenen Nächten zwischen Einzelpersonen und sogar innerhalb derselben Person variieren kann.",
+          "finding": "Eine Studie von Carskadon und Demenz (2011) ergab, dass Schlafzyklen zwischen 70 und 120 Minuten liegen können, mit durchschnittlich 90-110 Minuten bei gesunden Erwachsenen.",
+          "reference": "Carskadon, M. A. & Demenz, W. C. (2011). "
+        },
+        "age": {
+          "title": "Schlafarchitektur ändert sich mit dem Alter",
+          "content": "Die Zusammensetzung und Länge der Schlafzyklen ändern sich während der gesamten Lebensdauer. ",
+          "finding": "Forschung von Ohayon et al. ",
+          "reference": "M. M. Ohayon, M. A. Carskadon, C. Guilleminault & M. V. Vitiello (2004). "
+        },
+        "performance": {
+          "title": "Ausrichtung und Leistung des Schlafzyklus",
+          "content": "Mehrere Studien haben die Beziehung zwischen dem Aufwachen am Ende eines Schlafzyklus und der kognitiven Leistung untersucht.",
+          "finding": "Lavie und Weler (1989) stellten fest, dass die Teilnehmer während des leichten Schlafes bei kognitiven Aufgaben besser abschneiden als diejenigen, die während des tiefen Schlafes gewohnt wurden, unabhängig von der gesamten Schlafdauer.",
+          "reference": "Lavie, P. & Weler, B. (1989). "
+        },
+        "tracking": {
+          "title": "Schlafverfolgungstechnologievalidierung",
+          "content": "Moderne Schlafverfolgungsanwendungen behaupten häufig, Schlafzyklen zu erkennen, ihre Genauigkeit variiert jedoch erheblich.",
+          "finding": "Eine systematische Überprüfung von Kolla et al. ",
+          "reference": "Kolla, B. P., Mansukhani, S. & Mansukhani, M. P. (2016). "
+        }
+      }
+    },
+    "app_info": {
+      "title": "Über diese App",
+      "description": "Wie Sleepcycle Ihnen hilft, Ihren Schlaf zu optimieren",
+      "intro": "Sleepcycle soll Ihnen helfen, Ihren Schlafplan mit Ihren natürlichen Schlafzyklen auszurichten. ",
+      "how_it_works": {
+        "title": "Wie es funktioniert",
+        "description": "Die App berechnet optimale Bettzeit- und Weckzeiten basierend auf dem durchschnittlichen 90-minütigen Schlafzyklus (den Sie in Einstellungen anpassen können). ",
+        "benefit": "Wenn Sie am Ende eines vollständigen Schlafzyklus aufwachen möchten, ist es möglicherweise leichter, aus dem Bett zu kommen und sich den ganzen Tag über erfrischter zu fühlen."
+      },
+      "limitations": {
+        "title": "Einschränkungen",
+        "intro": "Während Sleepcycle auf dem wissenschaftlichen Verständnis von Schlafzyklen basiert, ist es wichtig zu beachten, dass:",
+        "points": {
+          "variation": "Schlafzyklen können zwischen Individuen variieren (typischerweise 80-120 Minuten)",
+          "averages": "Die App verwendet Durchschnittswerte und kann Ihre genaue Schlafarchitektur nicht vorhersagen",
+          "factors": "Andere Faktoren wie Schlafstörungen, Alkoholkonsum und Medikamente können die Schlafzyklen beeinflussen"
+        },
+        "disclaimer": "Für ernsthafte Schlafprobleme wenden Sie sich bitte an einen Fachmann oder einen Schlafspezialisten für medizinische Säure."
+      }
+    }
+  },
+  "tips": {
+    "title": "Schlaftipps",
+    "tabs": {
+      "before": "Vor dem Schlafengehen",
+      "environment": "Umfeld",
+      "habits": "Tägliche Gewohnheiten"
+    },
+    "before_bed": {
+      "title": "Vorbereitung auf den Schlaf",
+      "description": "Routinen und Praktiken für einen besseren Schlaf",
+      "tips": {
+        "routine": {
+          "title": "Eine Routine herstellen",
+          "description": "Erstellen Sie eine konsistente Vorschlafroutine, die Ihrem Körper signalisiert, dass es Zeit ist, sich zu entspannen. "
+        },
+        "screen_time": {
+          "title": "Bildschirmzeit begrenzen",
+          "description": "Vermeiden Sie mindestens 30 Minuten vor dem Schlafengehen Bildschirme (Telefone, Computer, Fernseher). "
+        },
+        "diet": {
+          "title": "Beobachten Sie Ihre Ernährung",
+          "description": "Vermeiden Sie schwere Mahlzeiten, Koffein und Alkohol in den Stunden vor dem Schlafengehen. "
+        },
+        "lighting": {
+          "title": "Beleuchtung einstellen",
+          "description": "Den Lichtern in Ihrem Haus dimmen, wenn sich die Schlafenszeit nähert. "
+        },
+        "temperature": {
+          "title": "Temperaturregulierung",
+          "description": "Nehmen Sie ungefähr eine Stunde vor dem Schlafengehen ein warmes Bad oder Duschen. "
+        }
+      }
+    },
+    "environment": {
+      "title": "Schlafumgebung",
+      "description": "Schaffung des idealen Schlafraums",
+      "tips": {
+        "temperature": {
+          "title": "Raumtemperatur",
+          "description": "Halten Sie Ihr Schlafzimmer kühl, idealerweise zwischen 18-20 ° C. "
+        },
+        "darkness": {
+          "title": "Dunkelheit",
+          "description": "Verwenden Sie Blackout -Vorhänge oder eine Augenmaske, um Licht auszusperren. "
+        },
+        "quiet": {
+          "title": "Ruhig",
+          "description": "Reduzieren Sie Geräuschstörungen mit Ohrstöpsel, einer weißen Rauschmaschine oder einem Lüfter. "
+        },
+        "bedding": {
+          "title": "Bequeme Bettwäsche",
+          "description": "Investieren Sie in eine unterstützende Matratze und Kissen, die Ihrer bevorzugten Schlafposition aufnehmen. "
+        },
+        "air_quality": {
+          "title": "Luftqualität",
+          "description": "Stellen Sie sicher, dass Ihr Schlafzimmer gut belüftet ist. "
+        }
+      }
+    },
+    "habits": {
+      "title": "Tägliche Gewohnheiten für einen besseren Schlaf",
+      "description": "Lebensstilfaktoren, die die Schlafqualität beeinflussen",
+      "tips": {
+        "schedule": {
+          "title": "Konstantes Zeitplan",
+          "description": "Gehen Sie ins Bett und wachen Sie jeden Tag zur gleichen Zeit auf, auch am Wochenende. "
+        },
+        "daylight": {
+          "title": "Tageslichtbekämpfung",
+          "description": "Holen Sie sich jeden Tag mindestens 30 Minuten natürliches Sonnenlicht, vorzugsweise morgens. "
+        },
+        "exercise": {
+          "title": "Regelmäßige Bewegung",
+          "description": "Machen Sie regelmäßig körperliche Aktivität, aber versuchen Sie, mindestens 3-4 Stunden vor dem Schlafengehen kräftige Bewegungen zu vervollständigen. "
+        },
+        "substances": {
+          "title": "Koffein und Alkohol verwalten",
+          "description": "Begrenzen Sie Koffein nach Mittag und vermeiden Sie Alkohol innerhalb von 3 Stunden nach dem Schlafengehen. "
+        },
+        "stress": {
+          "title": "Stressmanagement",
+          "description": "Üben Sie Stressreduzierungstechniken wie Meditation, tiefes Atmen oder Journaling. "
+        },
+        "naps": {
+          "title": "Nickerchen begrenzen",
+          "description": "Wenn Sie ein Nickerchen machen, halten Sie es kurz (20-30 Minuten) und vor 15 Uhr. "
+        }
+      }
+    }
+  },
+  "not_found": {
+    "title": "404",
+    "message": "Hoppla! ",
+    "return_home": "Kehre nach Hause zurück"
+  }
+}

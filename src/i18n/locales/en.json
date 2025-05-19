@@ -1,0 +1,337 @@
+{
+  "app": {
+    "name": "Sleep Cycle Calculator"
+  },
+  "home": {
+    "title": "Sleep Cycle Calculator",
+    "calculate": {
+      "title": "Calculate Your Sleep Cycles",
+      "description": "Enter your bedtime and wake-up time to optimize your sleep",
+      "bedtime_question": "What time do you plan to go to bed?",
+      "wakeup_question": "What time do you want to wake up?",
+      "latency_label": "Sleep latency: {{minutes}} minutes",
+      "latency_description": "Average time it takes you to fall asleep",
+      "calculate_button": "Calculate Sleep Cycles"
+    },
+    "calculation_types": {
+      "normal": "Normal",
+      "from_bedtime": "From Bedtime",
+      "from_wakeup": "From Wake-up"
+    },
+    "errors": {
+      "missing_times": {
+        "title": "Missing times",
+        "description": "Please enter both bedtime and wake-up time"
+      },
+      "calculation_error": {
+        "title": "Calculation Error",
+        "description": "There was a problem calculating your sleep cycles."
+      }
+    }
+  },
+  "history": {
+    "title": "Sleep History",
+    "empty_state": "No sleep history available yet. Calculate your sleep cycles to start tracking your sleep patterns.",
+    "filters": {
+      "time_range": {
+        "week": "Week",
+        "month": "Month",
+        "all": "All"
+      },
+      "chart_type": {
+        "bar": "Bar",
+        "line": "Line"
+      }
+    },
+    "patterns": {
+      "title": "Sleep Patterns",
+      "description": "Visualize your sleep cycles and duration over time",
+      "tabs": {
+        "cycles": "Sleep Cycles",
+        "duration": "Sleep Duration"
+      },
+      "charts": {
+        "cycles": {
+          "name": "Sleep Cycles",
+          "y_axis": "Number of Cycles"
+        },
+        "duration": {
+          "name": "Sleep Duration (hours)",
+          "y_axis": "Hours"
+        }
+      }
+    },
+    "recent_data": {
+      "title": "Recent Sleep Data",
+      "description": "Details of your recent sleep calculations",
+      "table": {
+        "headers": {
+          "date": "Date",
+          "bedtime": "Bedtime",
+          "wakeup": "Wake-up",
+          "cycles": "Cycles",
+          "ideal_bedtime": "Ideal Bedtime"
+        }
+      }
+    }
+  },
+  "results": {
+    "title": "Sleep Cycle Results",
+    "summary": "Sleep Summary",
+    "based_on": "Based on your bedtime at {{bedtime}} and wake-up at {{wakeup}}",
+    "total_duration": "Total Sleep Duration",
+    "sleep_cycles": "Sleep Cycles",
+    "complete_cycles": "{{complete}} complete + {{partial}}% of a cycle",
+    "quality": {
+      "title": "Sleep Quality Assessment",
+      "poor": "Poor",
+      "adequate": "Adequate",
+      "good": "Good",
+      "excellent": "Excellent"
+    },
+    "suggestion": {
+      "title": "Improvement Suggestion",
+      "need_more": "For optimal sleep, consider going to bed at {{time}} to complete 5 full sleep cycles.",
+      "optimal": "You're already getting an optimal amount of sleep cycles. Great job!"
+    },
+    "ideal_bedtimes": "Ideal Bedtimes",
+    "for_wakeup": "For your wake-up time at {{time}}",
+    "ideal_wakeuptimes": "Ideal Wake-up Times",
+    "for_bedtime": "For your bedtime at {{time}}",
+    "cycles": "{{count}} sleep cycles",
+    "actions": {
+      "select": "Select",
+      "new_calculation": "New Calculation",
+      "remind_me": "Remind Me"
+    },
+    "notification": {
+      "scheduled": "Notification Scheduled",
+      "reminder_info": "You'll be notified 30 minutes before your ideal bedtime ({{time}})"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "sleep_preferences": {
+      "title": "Sleep Preferences",
+      "description": "Customize your sleep cycle calculation parameters",
+      "cycle_length": "Sleep Cycle Length",
+      "minutes": "{{count}} minutes",
+      "cycle_info": "Standard sleep cycle is 90 minutes, but can vary between individuals",
+      "latency": "Sleep Latency (Time to Fall Asleep)",
+      "latency_info": "How long it typically takes you to fall asleep after going to bed"
+    },
+    "app_preferences": {
+      "title": "App Preferences",
+      "description": "Customize your app experience",
+      "dark_mode": "Dark Mode",
+      "theme_info": "Switch between light and dark themes",
+      "reminders": "Sleep Reminders",
+      "reminders_info": "Receive notifications for your ideal bedtime",
+      "language": "Language"
+    },
+    "data_management": {
+      "title": "Data Management",
+      "description": "Manage your saved data",
+      "clear_history": "Clear Sleep History"
+    },
+    "save_button": "Save Settings",
+    "notifications": {
+      "enabled": "Notifications Enabled",
+      "enabled_description": "You'll now receive sleep reminders when requested",
+      "disabled": "Notifications Disabled",
+      "disabled_description": "You won't receive any more sleep reminders",
+      "permission_denied": "Permission Denied",
+      "permission_denied_description": "Notification permission was not granted",
+      "settings_saved": "Settings Saved",
+      "settings_saved_description": "Your preferences have been updated",
+      "history_cleared": "History Cleared",
+      "history_cleared_description": "Your sleep history has been completely cleared"
+    }
+  },
+  "navbar": {
+    "home": "Home",
+    "history": "History",
+    "about": "About",
+    "sleep_tips": "Sleep Tips",
+    "settings": "Settings"
+  },
+  "about": {
+    "title": "About Sleep Cycles",
+    "understanding": {
+      "title": "Understanding Sleep Cycles",
+      "description": "The science behind sleep stages and cycles",
+      "intro": "Sleep is not a uniform state but rather consists of different stages that repeat in cycles throughout the night. A typical sleep cycle lasts about 90 minutes, though this can vary between individuals (from 80-120 minutes).",
+      "stages_title": "The Stages of Sleep",
+      "stages": {
+        "light": {
+          "title": "Light Sleep (N1 & N2)",
+          "description": "The entry stages where you can be easily awakened. Your muscle activity slows down and your eyes stop moving."
+        },
+        "deep": {
+          "title": "Deep Sleep (N3)",
+          "description": "Also known as slow-wave sleep, this is when your body repairs tissues, builds bone and muscle, and strengthens the immune system."
+        },
+        "rem": {
+          "title": "REM Sleep",
+          "description": "When most dreaming occurs. Your brain is almost as active as when you're awake. Critical for cognitive functions like memory and learning."
+        }
+      },
+      "cycle_changes": "During the night, you cycle through these stages multiple times, with each cycle lasting approximately 90 minutes. The composition of each cycle changes throughout the night:",
+      "cycle_points": {
+        "early": "Early cycles contain more deep sleep (N3)",
+        "late": "Later cycles contain more REM sleep",
+        "waking": "Waking up during light sleep (N1 or N2) feels more refreshed than during deep sleep"
+      },
+      "importance_title": "Why Sleep Cycles Matter",
+      "importance": {
+        "aligning": "Aligning your wake-up time with the end of a sleep cycle can help you feel more refreshed. This is because waking up during deep sleep often leads to sleep inertia—that groggy, disoriented feeling that can persist for up to 30 minutes after waking.",
+        "planning": "By calculating your sleep cycles, you can plan your bedtime or wake-up time to coincide with the completion of a full cycle, potentially making it easier to wake up and feel more alert."
+      }
+    },
+    "research": {
+      "title": "Research & Academic Studies",
+      "description": "Scientific background on sleep cycles",
+      "studies": {
+        "duration": {
+          "title": "Sleep Cycle Duration Research",
+          "content": "While the commonly cited duration of a sleep cycle is 90 minutes, research has shown that this can vary between individuals and even within the same person on different nights.",
+          "finding": "A study by Carskadon and Dement (2011) found that sleep cycles can range from 70 to 120 minutes, with an average of 90-110 minutes in healthy adults.",
+          "reference": "Carskadon, M. A., & Dement, W. C. (2011). Normal human sleep: An overview. In M. H. Kryger, T. Roth, & W. C. Dement (Eds.), Principles and practice of sleep medicine (5th ed., pp. 16-26)."
+        },
+        "age": {
+          "title": "Sleep Architecture Changes with Age",
+          "content": "The composition and length of sleep cycles change throughout the lifespan. Infants spend much more time in REM sleep, while elderly individuals often experience shorter cycles with less deep sleep.",
+          "finding": "Research by Ohayon et al. (2004) demonstrated a progressive decrease in deep sleep with age, which may explain why older adults often report feeling less refreshed after sleep.",
+          "reference": "Ohayon, M. M., Carskadon, M. A., Guilleminault, C., & Vitiello, M. V. (2004). Meta-analysis of quantitative sleep parameters from childhood to old age in healthy individuals: Developing normative sleep values across the human lifespan. Sleep, 27(7), 1255-1273."
+        },
+        "performance": {
+          "title": "Sleep Cycle Alignment and Performance",
+          "content": "Multiple studies have examined the relationship between waking up at the end of a sleep cycle and cognitive performance.",
+          "finding": "Lavie and Weler (1989) found that participants woken during light sleep performed better on cognitive tasks than those woken during deep sleep, regardless of total sleep duration.",
+          "reference": "Lavie, P., & Weler, B. (1989). Timing of naps: Effects on post-nap sleepiness levels. Electroencephalography and Clinical Neurophysiology, 72(3), 218-224."
+        },
+        "tracking": {
+          "title": "Sleep Tracking Technology Validation",
+          "content": "Modern sleep tracking applications often claim to detect sleep cycles, but their accuracy varies considerably.",
+          "finding": "A systematic review by Kolla et al. (2016) evaluated consumer sleep tracking devices and found that while they may be useful for tracking sleep patterns over time, they have limitations in accurately identifying specific sleep stages compared to polysomnography (the gold standard for sleep measurement).",
+          "reference": "Kolla, B. P., Mansukhani, S., & Mansukhani, M. P. (2016). Consumer sleep tracking devices: A review of mechanisms, validity and utility. Expert Review of Medical Devices, 13(5), 497-506."
+        }
+      }
+    },
+    "app_info": {
+      "title": "About This App",
+      "description": "How SleepCycle helps you optimize your sleep",
+      "intro": "SleepCycle is designed to help you align your sleep schedule with your natural sleep cycles. By understanding the science of sleep cycles, you can make informed decisions about when to go to bed and when to wake up.",
+      "how_it_works": {
+        "title": "How It Works",
+        "description": "The app calculates optimal bedtimes and wake-up times based on the average 90-minute sleep cycle (which you can customize in settings). It takes into account your sleep latency—the time it typically takes you to fall asleep—to provide more accurate recommendations.",
+        "benefit": "By aiming to wake up at the end of a complete sleep cycle, you may find it easier to get out of bed and feel more refreshed throughout the day."
+      },
+      "limitations": {
+        "title": "Limitations",
+        "intro": "While SleepCycle is based on scientific understanding of sleep cycles, it's important to note that:",
+        "points": {
+          "variation": "Sleep cycles can vary in length between individuals (typically 80-120 minutes)",
+          "averages": "The app uses averages and cannot predict your exact sleep architecture",
+          "factors": "Other factors like sleep disorders, alcohol consumption, and medication can affect sleep cycles"
+        },
+        "disclaimer": "For serious sleep concerns, please consult a healthcare professional or sleep specialist."
+      }
+    }
+  },
+  "tips": {
+    "title": "Sleep Tips",
+    "tabs": {
+      "before": "Before Bed",
+      "environment": "Environment",
+      "habits": "Daily Habits"
+    },
+    "before_bed": {
+      "title": "Preparing for Sleep",
+      "description": "Routines and practices for better sleep",
+      "tips": {
+        "routine": {
+          "title": "Establish a Routine",
+          "description": "Create a consistent pre-sleep routine that signals to your body it's time to wind down. This could include reading, gentle stretching, or meditation."
+        },
+        "screen_time": {
+          "title": "Limit Screen Time",
+          "description": "Avoid screens (phones, computers, TVs) at least 30 minutes before bed. The blue light can interfere with melatonin production and make it harder to fall asleep."
+        },
+        "diet": {
+          "title": "Watch Your Diet",
+          "description": "Avoid heavy meals, caffeine, and alcohol in the hours leading up to bedtime. If you're hungry, opt for a light snack like a banana, small bowl of cereal, or a few nuts."
+        },
+        "lighting": {
+          "title": "Adjust Lighting",
+          "description": "Dim the lights in your home as bedtime approaches. This helps signal to your brain that it's time to produce melatonin, the sleep hormone."
+        },
+        "temperature": {
+          "title": "Temperature Regulation",
+          "description": "Take a warm bath or shower about an hour before bed. The subsequent drop in body temperature can help induce sleepiness."
+        }
+      }
+    },
+    "environment": {
+      "title": "Sleep Environment",
+      "description": "Creating the ideal sleep space",
+      "tips": {
+        "temperature": {
+          "title": "Room Temperature",
+          "description": "Keep your bedroom cool, ideally between 65-68°F (18-20°C). A cooler room helps lower your body temperature, which is necessary for sleep."
+        },
+        "darkness": {
+          "title": "Darkness",
+          "description": "Use blackout curtains or an eye mask to block out light. Even small amounts of light can interfere with sleep quality."
+        },
+        "quiet": {
+          "title": "Quiet",
+          "description": "Reduce noise disruptions with earplugs, a white noise machine, or a fan. Even sounds that don't fully wake you can disrupt your sleep cycles."
+        },
+        "bedding": {
+          "title": "Comfortable Bedding",
+          "description": "Invest in a supportive mattress and pillows that accommodate your preferred sleep position. Replace pillows every 1-2 years and mattresses every 7-10 years."
+        },
+        "air_quality": {
+          "title": "Air Quality",
+          "description": "Ensure your bedroom is well-ventilated. Consider using an air purifier, especially if you have allergies, and keep plants out of the bedroom at night."
+        }
+      }
+    },
+    "habits": {
+      "title": "Daily Habits for Better Sleep",
+      "description": "Lifestyle factors that influence sleep quality",
+      "tips": {
+        "schedule": {
+          "title": "Consistent Schedule",
+          "description": "Go to bed and wake up at the same time every day, even on weekends. This helps regulate your body's internal clock and improve sleep quality."
+        },
+        "daylight": {
+          "title": "Daylight Exposure",
+          "description": "Get at least 30 minutes of natural sunlight each day, preferably in the morning. This helps regulate your circadian rhythm and melatonin production."
+        },
+        "exercise": {
+          "title": "Regular Exercise",
+          "description": "Engage in physical activity regularly, but try to complete vigorous exercise at least 3-4 hours before bedtime. Morning or afternoon exercise can help you fall asleep faster and enjoy deeper sleep."
+        },
+        "substances": {
+          "title": "Manage Caffeine and Alcohol",
+          "description": "Limit caffeine after noon and avoid alcohol within 3 hours of bedtime. While alcohol may help you fall asleep initially, it disrupts sleep cycles later in the night."
+        },
+        "stress": {
+          "title": "Stress Management",
+          "description": "Practice stress-reduction techniques such as meditation, deep breathing, or journaling. Consider keeping a 'worry journal' to write down concerns before bed so your mind can let go of them."
+        },
+        "naps": {
+          "title": "Limit Naps",
+          "description": "If you nap, keep it short (20-30 minutes) and before 3 PM. While short naps can boost alertness, longer or late-day naps can interfere with nighttime sleep."
+        }
+      }
+    }
+  },
+  "not_found": {
+    "title": "404",
+    "message": "Oops! Page not found",
+    "return_home": "Return to Home"
+  }
+}

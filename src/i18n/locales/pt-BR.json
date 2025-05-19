@@ -1,0 +1,337 @@
+{
+  "app": {
+    "name": "Calculadora de Ciclos de Sono"
+  },
+  "home": {
+    "title": "Calculadora de Ciclos de Sono",
+    "calculate": {
+      "title": "Calcule Seus Ciclos de Sono",
+      "description": "Insira seu horário de dormir e de acordar para otimizar seu sono",
+      "bedtime_question": "A que horas você planeja dormir?",
+      "wakeup_question": "A que horas você quer acordar?",
+      "latency_label": "Latência do sono: {{minutes}} minutos",
+      "latency_description": "Tempo médio que você leva para adormecer",
+      "calculate_button": "Calcular Ciclos de Sono"
+    },
+    "calculation_types": {
+      "normal": "Normal",
+      "from_bedtime": "A partir da hora de dormir",
+      "from_wakeup": "A partir da hora de acordar"
+    },
+    "errors": {
+      "missing_times": {
+        "title": "Horários faltando",
+        "description": "Por favor, insira tanto o horário de dormir quanto o de acordar"
+      },
+      "calculation_error": {
+        "title": "Erro de Cálculo",
+        "description": "Ocorreu um problema ao calcular seus ciclos de sono."
+      }
+    }
+  },
+  "history": {
+    "title": "Histórico do Sono",
+    "empty_state": "Ainda não há histórico de sono. Calcule seus ciclos de sono para começar a acompanhar seus padrões de sono.",
+    "filters": {
+      "time_range": {
+        "week": "Semana",
+        "month": "Mês",
+        "all": "Todos"
+      },
+      "chart_type": {
+        "bar": "Barra",
+        "line": "Linha"
+      }
+    },
+    "patterns": {
+      "title": "Padrões de Sono",
+      "description": "Visualize seus ciclos e duração do sono ao longo do tempo",
+      "tabs": {
+        "cycles": "Ciclos de Sono",
+        "duration": "Duração do Sono"
+      },
+      "charts": {
+        "cycles": {
+          "name": "Ciclos de Sono",
+          "y_axis": "Número de Ciclos"
+        },
+        "duration": {
+          "name": "Duração do Sono (horas)",
+          "y_axis": "Horas"
+        }
+      }
+    },
+    "recent_data": {
+      "title": "Dados Recentes de Sono",
+      "description": "Detalhes de seus cálculos de sono recentes",
+      "table": {
+        "headers": {
+          "date": "Data",
+          "bedtime": "Horário de Dormir",
+          "wakeup": "Horário de Acordar",
+          "cycles": "Ciclos",
+          "ideal_bedtime": "Horário Ideal de Dormir"
+        }
+      }
+    }
+  },
+  "results": {
+    "title": "Resultados do Ciclo de Sono",
+    "summary": "Resumo do Sono",
+    "based_on": "Com base na sua hora de dormir às {{bedtime}} e de acordar às {{wakeup}}",
+    "total_duration": "Duração Total do Sono",
+    "sleep_cycles": "Ciclos de Sono",
+    "complete_cycles": "{{complete}} completos + {{partial}}% de um ciclo",
+    "quality": {
+      "title": "Avaliação da Qualidade do Sono",
+      "poor": "Ruim",
+      "adequate": "Adequado",
+      "good": "Bom",
+      "excellent": "Excelente"
+    },
+    "suggestion": {
+      "title": "Sugestão de Melhoria",
+      "need_more": "Para um sono ideal, considere dormir às {{time}} para completar 5 ciclos completos.",
+      "optimal": "Você já está obtendo a quantidade ideal de ciclos de sono. Parabéns!"
+    },
+    "ideal_bedtimes": "Horários Ideais para Dormir",
+    "for_wakeup": "Para seu horário de despertar às {{time}}",
+    "ideal_wakeuptimes": "Horários Ideais para Acordar",
+    "for_bedtime": "Para seu horário de dormir às {{time}}",
+    "cycles": "{{count}} ciclos de sono",
+    "actions": {
+      "select": "Selecionar",
+      "new_calculation": "Novo Cálculo",
+      "remind_me": "Me Lembrar"
+    },
+    "notification": {
+      "scheduled": "Notificação Agendada",
+      "reminder_info": "Você será notificado 30 minutos antes do seu horário ideal de dormir ({{time}})"
+    }
+  },
+  "settings": {
+    "title": "Configurações",
+    "sleep_preferences": {
+      "title": "Preferências de Sono",
+      "description": "Personalize seus parâmetros de cálculo de ciclos de sono",
+      "cycle_length": "Duração do Ciclo de Sono",
+      "minutes": "{{count}} minutos",
+      "cycle_info": "O ciclo de sono padrão é de 90 minutos, mas pode variar entre indivíduos",
+      "latency": "Latência do Sono (Tempo para Adormecer)",
+      "latency_info": "Quanto tempo você normalmente leva para adormecer após se deitar"
+    },
+    "app_preferences": {
+      "title": "Preferências do App",
+      "description": "Personalize a experiência no app",
+      "dark_mode": "Modo Escuro",
+      "theme_info": "Alterne entre temas claro e escuro",
+      "reminders": "Lembretes de Sono",
+      "reminders_info": "Receba notificações para seu horário ideal de dormir",
+      "language": "Idioma"
+    },
+    "data_management": {
+      "title": "Gerenciamento de Dados",
+      "description": "Gerencie seus dados salvos",
+      "clear_history": "Limpar Histórico de Sono"
+    },
+    "save_button": "Salvar Configurações",
+    "notifications": {
+      "enabled": "Notificações Ativadas",
+      "enabled_description": "Você receberá lembretes de sono quando solicitados",
+      "disabled": "Notificações Desativadas",
+      "disabled_description": "Você não receberá mais lembretes de sono",
+      "permission_denied": "Permissão Negada",
+      "permission_denied_description": "A permissão para notificações não foi concedida",
+      "settings_saved": "Configurações Salvas",
+      "settings_saved_description": "Suas preferências foram atualizadas",
+      "history_cleared": "Histórico Limpo",
+      "history_cleared_description": "Seu histórico de sono foi completamente apagado"
+    }
+  },
+  "navbar": {
+    "home": "Início",
+    "history": "Histórico",
+    "about": "Sobre",
+    "sleep_tips": "Dicas de Sono",
+    "settings": "Configurações"
+  },
+  "about": {
+    "title": "Sobre Ciclos de Sono",
+    "understanding": {
+      "title": "Entendendo os Ciclos de Sono",
+      "description": "A ciência por trás dos estágios e ciclos do sono",
+      "intro": "O sono não é um estado uniforme, mas consiste em diferentes estágios que se repetem em ciclos ao longo da noite. Um ciclo típico de sono dura cerca de 90 minutos, embora isso possa variar entre indivíduos (de 80 a 120 minutos).",
+      "stages_title": "Os Estágios do Sono",
+      "stages": {
+        "light": {
+          "title": "Sono Leve (N1 & N2)",
+          "description": "Os estágios de entrada em que você pode ser facilmente despertado. Sua atividade muscular diminui e seus olhos param de se mover."
+        },
+        "deep": {
+          "title": "Sono Profundo (N3)",
+          "description": "Também conhecido como sono de ondas lentas, é quando seu corpo repara tecidos, constrói ossos e músculos e fortalece o sistema imunológico."
+        },
+        "rem": {
+          "title": "Sono REM",
+          "description": "Quando ocorrem a maioria dos sonhos. Seu cérebro está quase tão ativo quanto quando você está acordado. Fundamental para funções cognitivas como memória e aprendizado."
+        }
+      },
+      "cycle_changes": "Durante a noite, você passa por esses estágios várias vezes, com cada ciclo durando aproximadamente 90 minutos. A composição de cada ciclo muda ao longo da noite:",
+      "cycle_points": {
+        "early": "Os ciclos iniciais contêm mais sono profundo (N3)",
+        "late": "Os ciclos posteriores contêm mais sono REM",
+        "waking": "Acordar durante o sono leve (N1 ou N2) faz você se sentir mais revigorado do que durante o sono profundo"
+      },
+      "importance_title": "Por que os Ciclos de Sono Importam",
+      "importance": {
+        "aligning": "Alinhar seu horário de despertar com o fim de um ciclo de sono pode ajudar você a se sentir mais disposto. Isso porque acordar durante o sono profundo muitas vezes leva à inércia do sono — aquela sensação grogue e desorientada que pode persistir por até 30 minutos após o despertar.",
+        "planning": "Ao calcular seus ciclos de sono, você pode planejar seu horário de dormir ou despertar para coincidir com a conclusão de um ciclo completo, tornando potencialmente mais fácil acordar e se sentir mais alerta."
+      }
+    },
+    "research": {
+      "title": "Pesquisa & Estudos Acadêmicos",
+      "description": "Fundamentos científicos sobre ciclos de sono",
+      "studies": {
+        "duration": {
+          "title": "Pesquisa sobre Duração do Ciclo de Sono",
+          "content": "Embora a duração comumente citada de um ciclo de sono seja de 90 minutos, pesquisas mostram que isso pode variar entre indivíduos e até na mesma pessoa em noites diferentes.",
+          "finding": "Um estudo de Carskadon e Dement (2011) descobriu que os ciclos de sono podem variar de 70 a 120 minutos, com média de 90 a 110 minutos em adultos saudáveis.",
+          "reference": "Carskadon, M. A., & Dement, W. C. (2011). Normal human sleep: An overview. In M. H. Kryger, T. Roth, & W. C. Dement (Eds.), Principles and practice of sleep medicine (5th ed., pp. 16-26)."
+        },
+        "age": {
+          "title": "Mudanças na Arquitetura do Sono com a Idade",
+          "content": "A composição e a duração dos ciclos de sono mudam ao longo da vida. Bebês passam muito mais tempo em sono REM, enquanto idosos frequentemente experimentam ciclos mais curtos com menos sono profundo.",
+          "finding": "Pesquisa de Ohayon et al. (2004) demonstrou uma diminuição progressiva do sono profundo com a idade, o que pode explicar por que adultos mais velhos muitas vezes relatam se sentir menos revigorados após o sono.",
+          "reference": "Ohayon, M. M., Carskadon, M. A., Guilleminault, C., & Vitiello, M. V. (2004). Meta-analysis of quantitative sleep parameters from childhood to old age in healthy individuals: Developing normative sleep values across the human lifespan. Sleep, 27(7), 1255-1273."
+        },
+        "performance": {
+          "title": "Alinhamento do Ciclo de Sono e Desempenho",
+          "content": "Vários estudos analisaram a relação entre acordar no fim de um ciclo de sono e o desempenho cognitivo.",
+          "finding": "Lavie e Weler (1989) descobriram que participantes acordados durante o sono leve tiveram desempenho melhor em tarefas cognitivas do que aqueles acordados durante o sono profundo, independentemente da duração total do sono.",
+          "reference": "Lavie, P., & Weler, B. (1989). Timing of naps: Effects on post-nap sleepiness levels. Electroencephalography and Clinical Neurophysiology, 72(3), 218-224."
+        },
+        "tracking": {
+          "title": "Validação de Tecnologias de Monitoramento de Sono",
+          "content": "Aplicativos modernos de monitoramento de sono frequentemente afirmam detectar ciclos de sono, mas sua precisão varia consideravelmente.",
+          "finding": "Uma revisão sistemática de Kolla et al. (2016) avaliou dispositivos de monitoramento de sono para consumidores e constatou que, embora possam ser úteis para acompanhar padrões de sono ao longo do tempo, têm limitações na identificação precisa de estágios de sono em comparação com a polissonografia (padrão-ouro para medição do sono).",
+          "reference": "Kolla, B. P., Mansukhani, S., & Mansukhani, M. P. (2016). Consumer sleep tracking devices: A review of mechanisms, validity and utility. Expert Review of Medical Devices, 13(5), 497-506."
+        }
+      }
+    },
+    "app_info": {
+      "title": "Sobre Este App",
+      "description": "Como o SleepCycle ajuda a otimizar seu sono",
+      "intro": "O SleepCycle é projetado para ajudá-lo a alinhar sua rotina de sono com seus ciclos naturais. Ao entender a ciência dos ciclos de sono, você pode tomar decisões informadas sobre quando dormir e acordar.",
+      "how_it_works": {
+        "title": "Como Funciona",
+        "description": "O app calcula horários ideais de dormir e acordar com base no ciclo médio de 90 minutos (que você pode personalizar nas configurações). Leva em conta sua latência de sono — o tempo que você normalmente leva para adormecer — para fornecer recomendações mais precisas.",
+        "benefit": "Ao buscar acordar no fim de um ciclo completo, pode ser mais fácil sair da cama e se sentir mais revigorado ao longo do dia."
+      },
+      "limitations": {
+        "title": "Limitações",
+        "intro": "Embora o SleepCycle se baseie em compreensão científica dos ciclos de sono, é importante notar que:",
+        "points": {
+          "variation": "Os ciclos de sono podem variar em duração entre indivíduos (tipicamente 80-120 minutos)",
+          "averages": "O app usa médias e não pode prever sua arquitetura exata do sono",
+          "factors": "Outros fatores como distúrbios do sono, consumo de álcool e medicação podem afetar os ciclos de sono"
+        },
+        "disclaimer": "Para preocupações sérias sobre sono, consulte um profissional de saúde ou especialista em sono."
+      }
+    }
+  },
+  "tips": {
+    "title": "Dicas de Sono",
+    "tabs": {
+      "before": "Antes de Dormir",
+      "environment": "Ambiente",
+      "habits": "Hábitos Diários"
+    },
+    "before_bed": {
+      "title": "Preparando-se para o Sono",
+      "description": "Rotinas e práticas para um sono melhor",
+      "tips": {
+        "routine": {
+          "title": "Estabeleça uma Rotina",
+          "description": "Crie uma rotina consistente antes de dormir que sinalize ao seu corpo que é hora de desacelerar. Isso pode incluir leitura, alongamento leve ou meditação."
+        },
+        "screen_time": {
+          "title": "Limite o Tempo de Tela",
+          "description": "Evite telas (celular, computador, TV) pelo menos 30 minutos antes de dormir. A luz azul pode interferir na produção de melatonina e dificultar adormecer."
+        },
+        "diet": {
+          "title": "Observe sua Dieta",
+          "description": "Evite refeições pesadas, cafeína e álcool nas horas que antecedem o sono. Se estiver com fome, opte por um lanche leve como banana, tigela pequena de cereal ou algumas nozes."
+        },
+        "lighting": {
+          "title": "Ajuste a Iluminação",
+          "description": "Abaixe as luzes de casa conforme a hora de dormir se aproxima. Isso ajuda a sinalizar ao cérebro a produção de melatonina, o hormônio do sono."
+        },
+        "temperature": {
+          "title": "Regulação de Temperatura",
+          "description": "Tome um banho ou ducha quente cerca de uma hora antes de dormir. A queda subsequente na temperatura corporal pode ajudar a induzir o sono."
+        }
+      }
+    },
+    "environment": {
+      "title": "Ambiente de Sono",
+      "description": "Criando o ambiente ideal para dormir",
+      "tips": {
+        "temperature": {
+          "title": "Temperatura do Quarto",
+          "description": "Mantenha o quarto fresco, idealmente entre 18-20°C. Um ambiente mais frio ajuda a baixar a temperatura corporal, necessária para o sono."
+        },
+        "darkness": {
+          "title": "Escuridão",
+          "description": "Use cortinas blackout ou máscara para bloquear a luz. Mesmo pequenas quantidades de luz podem prejudicar a qualidade do sono."
+        },
+        "quiet": {
+          "title": "Silêncio",
+          "description": "Reduza ruídos com protetores auriculares, máquina de ruído branco ou ventilador. Mesmo sons que não acordam totalmente podem interromper seus ciclos de sono."
+        },
+        "bedding": {
+          "title": "Cama Confortável",
+          "description": "Invista em colchão e travesseiros que suportem sua posição de dormir. Substitua travesseiros a cada 1–2 anos e colchões a cada 7–10 anos."
+        },
+        "air_quality": {
+          "title": "Qualidade do Ar",
+          "description": "Garanta boa ventilação no quarto. Considere purificador de ar, especialmente se tiver alergias, e evite plantas no quarto à noite."
+        }
+      }
+    },
+    "habits": {
+      "title": "Hábitos Diários para um Sono Melhor",
+      "description": "Fatores de estilo de vida que influenciam a qualidade do sono",
+      "tips": {
+        "schedule": {
+          "title": "Horário Consistente",
+          "description": "Vá para a cama e acorde no mesmo horário todos os dias, até nos finais de semana. Isso ajuda a regular o relógio biológico e melhorar a qualidade do sono."
+        },
+        "daylight": {
+          "title": "Exposição à Luz Natural",
+          "description": "Tome pelo menos 30 minutos de sol por dia, de preferência pela manhã. Isso ajuda a regular seu ritmo circadiano e a produção de melatonina."
+        },
+        "exercise": {
+          "title": "Exercício Regular",
+          "description": "Pratique atividade física regularmente, mas tente terminar exercícios vigorosos pelo menos 3–4 horas antes de dormir. Exercícios pela manhã ou tarde podem ajudar a adormecer mais rápido e ter sono mais profundo."
+        },
+        "substances": {
+          "title": "Gerencie Cafeína e Álcool",
+          "description": "Limite a cafeína após o meio-dia e evite álcool nas 3 horas antes de dormir. Embora o álcool possa ajudar a adormecer, ele prejudica os ciclos de sono mais tarde na noite."
+        },
+        "stress": {
+          "title": "Gerenciamento do Estresse",
+          "description": "Pratique técnicas de redução de estresse, como meditação, respiração profunda ou journaling. Considere manter um 'diário de preocupações' para anotar pensamentos antes de dormir e ajudar a mente a relaxar."
+        },
+        "naps": {
+          "title": "Limite as Sonecas",
+          "description": "Se tirar cochilos, mantenha-os curtos (20–30 minutos) e antes das 15h. Cochilos curtos podem aumentar a disposição, mas cochilos longos ou tarde demais podem interferir no sono noturno."
+        }
+      }
+    }
+  },
+  "not_found": {
+    "title": "404",
+    "message": "Ops! Página não encontrada",
+    "return_home": "Voltar para o Início"
+  }
+}

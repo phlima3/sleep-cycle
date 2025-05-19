@@ -1,0 +1,13 @@
+
+{
+  "app": {
+    "name": "Calculadora de Ciclos de Sueño"
+  },
+  "navbar": {
+    "home": "Inicio",
+    "history": "Historial",
+    "about": "Acerca de",
+    "sleep_tips": "Consejos de Sueño",
+    "settings": "Configuración"
+  }
+}
