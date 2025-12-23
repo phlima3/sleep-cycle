@@ -193,45 +193,6 @@ const Results = () => {
           </CardContent>
         </Card>
 
-        {/* <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>{t("results.ideal_bedtimes")}</CardTitle>
-            <CardDescription>
-              {t("results.for_wakeup", {
-                time: formatTimeForDisplay(wakeupTime),
-              })}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {idealBedtimes.map((time, index) => (
-                <div
-                  key={index}
-                  className="flex justify-between items-center p-3 border rounded-lg"
-                >
-                  <div>
-                    <p className="font-semibold">
-                      {formatTimeForDisplay(time)}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {t("results.cycles", { count: 5 - index })}
-                    </p>
-                  </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      navigate("/", { state: { bedtime: time, wakeupTime } });
-                    }}
-                  >
-                    {t("results.actions.select")}
-                  </Button>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
         <Card className="mb-6">
           <CardHeader>
             <CardTitle>{t("results.ideal_wakeuptimes")}</CardTitle>
@@ -256,20 +217,11 @@ const Results = () => {
                       {t("results.cycles", { count: index + 3 })}
                     </p>
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      navigate("/", { state: { bedtime, wakeupTime: time } });
-                    }}
-                  >
-                    {t("results.actions.select")}
-                  </Button>
                 </div>
               ))}
             </div>
           </CardContent>
-        </Card> */}
+        </Card>
 
         <div className="flex flex-col sm:flex-row gap-4">
           <Button className="flex-1" onClick={() => navigate("/")}>
