@@ -1,0 +1,9 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Reminders collection - allow read/write for now (add auth later)
+    match /reminders/{reminderId} {
+      allow read, write: if true;
+    }
+  }
+}

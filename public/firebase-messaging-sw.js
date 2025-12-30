@@ -8,11 +8,24 @@ importScripts('https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging-comp
 // For now, we'll use self.__FIREBASE_CONFIG__ which can be set via postMessage
 let firebaseConfig = null;
 
-// Listen for config from main app
+// Listen for messages from main app
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'FIREBASE_CONFIG') {
     firebaseConfig = event.data.config;
     initializeFirebase();
+  }
+
+  // Handle local notification requests
+  if (event.data && event.data.type === 'SHOW_NOTIFICATION') {
+    const { title, body, data } = event.data;
+    self.registration.showNotification(title || 'SleepCycle', {
+      body: body || 'Hora de dormir!',
+      icon: '/android/android-launchericon-192-192.png',
+      badge: '/android/android-launchericon-96-96.png',
+      vibrate: [200, 100, 200],
+      tag: 'sleep-reminder-' + Date.now(),
+      data: data || { url: '/' },
+    });
   }
 });
 
@@ -57,6 +70,50 @@ function initializeFirebase() {
     console.error('[FCM SW] Error initializing Firebase:', error);
   }
 }
+
+// Handle generic push events (for DevTools testing and non-FCM push)
+self.addEventListener('push', (event) => {
+  console.log('[FCM SW] Push event received:', event);
+
+  let title = 'SleepCycle';
+  let body = 'Hora de dormir!';
+  let data = {};
+
+  if (event.data) {
+    // Get text first (can only read data once)
+    const text = event.data.text();
+    console.log('[FCM SW] Push data text:', text);
+
+    try {
+      // Try to parse as JSON (FCM format)
+      const payload = JSON.parse(text);
+      title = payload.notification?.title || payload.title || title;
+      body = payload.notification?.body || payload.body || body;
+      data = payload.data || {};
+    } catch (e) {
+      // Fallback to plain text (DevTools test)
+      body = text || body;
+    }
+  }
+
+  console.log('[FCM SW] Showing notification:', title, body);
+
+  const options = {
+    body,
+    icon: '/android/android-launchericon-192-192.png',
+    badge: '/android/android-launchericon-96-96.png',
+    vibrate: [200, 100, 200],
+    tag: 'sleep-reminder-' + Date.now(),
+    renotify: true,
+    data: { url: data.url || '/', ...data },
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(title, options)
+      .then(() => console.log('[FCM SW] Notification shown successfully'))
+      .catch(err => console.error('[FCM SW] Failed to show notification:', err))
+  );
+});
 
 // Handle notification click
 self.addEventListener('notificationclick', (event) => {

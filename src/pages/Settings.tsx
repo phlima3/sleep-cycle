@@ -12,7 +12,12 @@ import { useSleepHistory } from '@/contexts/SleepHistoryContext';
 import { usePushNotifications } from '@/hooks/usePushNotifications';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from 'react-i18next';
-import { Settings as SettingsIcon, Moon, Bell, Globe, Trash2, Save, Loader2 } from 'lucide-react';
+import { Settings as SettingsIcon, Moon, Bell, Globe, Trash2, Save, Loader2, Send, AlarmClock, Plus, X, Cloud, CloudOff } from 'lucide-react';
+import { getStoredFCMToken } from '@/lib/firebase';
+import { useReminders } from '@/hooks/useReminders';
+import { Input } from '@/components/ui/input';
+
+const DAYS_OF_WEEK = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
 const Settings = () => {
   const { settings, updateSettings } = useSettings();
@@ -27,11 +32,17 @@ const Settings = () => {
     enableNotifications,
     disableNotifications
   } = usePushNotifications();
+  const { reminders, nextBedtime, addReminder, updateReminder, removeReminder, calculateBedtime, isSyncing } = useReminders();
 
   const [cycleLength, setCycleLength] = useState(settings.cycleLength);
   const [sleepLatency, setSleepLatency] = useState(settings.sleepLatency);
   const [language, setLanguage] = useState(settings.language);
   const [notificationsEnabled, setNotificationsEnabled] = useState(settings.notificationsEnabled);
+
+  // Reminder form state
+  const [newWakeTime, setNewWakeTime] = useState('07:00');
+  const [newWindDown, setNewWindDown] = useState(30);
+  const [newDays, setNewDays] = useState<number[]>([1, 2, 3, 4, 5]); // Mon-Fri
 
   useEffect(() => {
     setCycleLength(settings.cycleLength);
@@ -75,6 +86,56 @@ const Settings = () => {
         description: t('settings.notifications.history_cleared_description'),
       });
     }
+  };
+
+  const handleTestNotification = () => {
+    const token = getStoredFCMToken();
+    if (token) {
+      navigator.clipboard.writeText(token);
+      toast({
+        title: 'FCM Token copiado!',
+        description: 'Cole no Firebase Console > Messaging > Send test message',
+      });
+    }
+
+    // Also show a local notification for immediate feedback
+    if (Notification.permission === 'granted') {
+      new Notification('SleepCycle - Teste', {
+        body: 'Notificação de teste funcionando!',
+        icon: '/android/android-launchericon-192-192.png',
+        badge: '/android/android-launchericon-96-96.png',
+      });
+    }
+  };
+
+  const handleAddReminder = () => {
+    if (!isPushEnabled) {
+      toast({
+        title: 'Ative as notificações primeiro',
+        description: 'Você precisa permitir notificações para criar lembretes.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    addReminder({
+      wakeUpTime: newWakeTime,
+      enabled: true,
+      daysOfWeek: newDays,
+      windDownMinutes: newWindDown,
+    });
+
+    const bedtime = calculateBedtime(newWakeTime, 5);
+    toast({
+      title: 'Lembrete criado!',
+      description: `Você será notificado ${newWindDown}min antes de ${bedtime.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`,
+    });
+  };
+
+  const toggleDay = (day: number) => {
+    setNewDays(prev =>
+      prev.includes(day) ? prev.filter(d => d !== day) : [...prev, day].sort()
+    );
   };
 
   return (
@@ -206,6 +267,18 @@ const Settings = () => {
               />
             </div>
 
+            {/* Test Notification Button */}
+            {isPushEnabled && (
+              <Button
+                variant="secondary"
+                className="w-full"
+                onClick={handleTestNotification}
+              >
+                <Send className="w-4 h-4 mr-2" />
+                Testar Notificação (copiar token)
+              </Button>
+            )}
+
             {/* Language Select */}
             <div className="space-y-3">
               <Label htmlFor="language" className="flex items-center gap-2 font-bold uppercase">
@@ -227,6 +300,122 @@ const Settings = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Sleep Reminders */}
+        {isPushEnabled && (
+          <Card className="mb-6">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <AlarmClock className="w-5 h-5" strokeWidth={2.5} />
+                Lembretes de Sono
+                {isSyncing ? (
+                  <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
+                ) : (
+                  <Cloud className="w-4 h-4 text-green-500" />
+                )}
+              </CardTitle>
+              <CardDescription>
+                Receba notificações para dormir no horário ideal
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Next bedtime info */}
+              {nextBedtime && (
+                <div className="p-4 rounded-base border-base border-bw bg-main/10">
+                  <p className="text-sm font-bold uppercase mb-1">Próximo lembrete</p>
+                  <p className="text-2xl font-bold">
+                    {nextBedtime.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                </div>
+              )}
+
+              {/* Existing reminders */}
+              {reminders.map((reminder) => (
+                <div
+                  key={reminder.id}
+                  className="flex items-center justify-between p-4 rounded-base border-base border-bw bg-secondary"
+                >
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-lg">Acordar às {reminder.wakeUpTime}</span>
+                      <Badge variant={reminder.enabled ? 'default' : 'secondary'}>
+                        {reminder.enabled ? 'Ativo' : 'Pausado'}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      {reminder.daysOfWeek.map(d => DAYS_OF_WEEK[d]).join(', ')} • {reminder.windDownMinutes}min antes
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Switch
+                      checked={reminder.enabled}
+                      onCheckedChange={(checked) => updateReminder(reminder.id, { enabled: checked })}
+                    />
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => removeReminder(reminder.id)}
+                    >
+                      <X className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+
+              {/* Add new reminder form */}
+              <div className="space-y-4 p-4 rounded-base border-base border-bw border-dashed">
+                <Label className="font-bold uppercase">Novo Lembrete</Label>
+
+                <div className="space-y-2">
+                  <Label htmlFor="wakeTime" className="text-sm">Horário de acordar</Label>
+                  <Input
+                    id="wakeTime"
+                    type="time"
+                    value={newWakeTime}
+                    onChange={(e) => setNewWakeTime(e.target.value)}
+                    className="text-lg"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm">Dias da semana</Label>
+                  <div className="flex gap-1 flex-wrap">
+                    {DAYS_OF_WEEK.map((day, index) => (
+                      <Button
+                        key={day}
+                        variant={newDays.includes(index) ? 'default' : 'secondary'}
+                        size="sm"
+                        onClick={() => toggleDay(index)}
+                        className="w-10 h-10 p-0"
+                      >
+                        {day[0]}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <Label className="text-sm">Avisar antes</Label>
+                    <Badge variant="secondary">{newWindDown} min</Badge>
+                  </div>
+                  <Slider
+                    value={[newWindDown]}
+                    min={15}
+                    max={60}
+                    step={15}
+                    onValueChange={(values) => setNewWindDown(values[0] ?? 30)}
+                  />
+                </div>
+
+                <Button className="w-full" onClick={handleAddReminder}>
+                  <Plus className="w-4 h-4 mr-2" />
+                  Adicionar Lembrete
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Data Management */}
         <Card className="mb-6">
