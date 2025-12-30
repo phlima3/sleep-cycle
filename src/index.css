@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -5,65 +6,89 @@
 
 @layer base {
   :root {
-    --background: 240 25% 98%;
-    --foreground: 223 47% 11%;
+    /* Neobrutalism core variables */
+    --main: #88aaee;
+    --main-foreground: #000000;
+    --overlay: rgba(0, 0, 0, 0.8);
+    --bg: #dfe5f2;
+    --bw: #000000;
+    --blank: #ffffff;
+    --text: #000000;
+
+    /* Shadow configuration */
+    --box-shadow-x: 4px;
+    --box-shadow-y: 4px;
+    --shadow: var(--box-shadow-x) var(--box-shadow-y) 0px 0px var(--bw);
+
+    /* Base semantic tokens */
+    --background: 220 20% 97%;
+    --foreground: 0 0% 0%;
 
     --card: 0 0% 100%;
-    --card-foreground: 223 47% 11%;
+    --card-foreground: 0 0% 0%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 223 47% 11%;
+    --popover-foreground: 0 0% 0%;
 
-    --primary: 222 80% 53%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 217 91% 73%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222 47% 11.2%;
+    --secondary: 220 20% 90%;
+    --secondary-foreground: 0 0% 0%;
 
-    --muted: 217 33% 93%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 220 20% 90%;
+    --muted-foreground: 0 0% 40%;
 
-    --accent: 251 85% 63%;
+    --accent: 262 83% 68%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 222 84% 70%;
+    --border: 0 0% 0%;
+    --input: 0 0% 0%;
+    --ring: 217 91% 73%;
 
-    --radius: 0.5rem;
+    --radius: 5px;
   }
 
   .dark {
-    --background: 224 71% 4%;
-    --foreground: 210 40% 98%;
+    /* Neobrutalism dark theme - Sleep-friendly palette */
+    --main: #a78bfa;
+    --main-foreground: #000000;
+    --overlay: rgba(0, 0, 0, 0.9);
+    --bg: #0c0a14;
+    --bw: #c4b5fd;
+    --blank: #1c1827;
+    --text: #f1f0f5;
 
-    --card: 224 71% 8%;
-    --card-foreground: 210 40% 98%;
+    --background: 260 25% 6%;
+    --foreground: 260 10% 96%;
 
-    --popover: 224 71% 8%;
-    --popover-foreground: 210 40% 98%;
+    --card: 260 20% 12%;
+    --card-foreground: 260 10% 96%;
 
-    --primary: 222 80% 53%;
-    --primary-foreground: 210 40% 98%;
+    --popover: 260 20% 12%;
+    --popover-foreground: 260 10% 96%;
 
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
+    --primary: 262 83% 76%;
+    --primary-foreground: 0 0% 0%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --secondary: 260 20% 18%;
+    --secondary-foreground: 260 10% 90%;
 
-    --accent: 251 85% 63%;
+    --muted: 260 15% 22%;
+    --muted-foreground: 260 10% 60%;
+
+    --accent: 262 83% 68%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 212 27% 84%;
+    --border: 262 50% 75%;
+    --input: 262 50% 75%;
+    --ring: 262 83% 76%;
   }
 }
 
@@ -73,11 +98,39 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-bg text-text font-medium;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
   }
 
   .page-container {
     @apply animate-page-in opacity-0 w-full min-h-[calc(100vh-5rem)] flex flex-col items-center;
+  }
+}
+
+@layer utilities {
+  /* Neobrutalism utility classes */
+  .brutal-shadow {
+    box-shadow: var(--shadow);
+  }
+
+  .brutal-border {
+    @apply border-base border-bw;
+  }
+
+  .brutal-card {
+    @apply bg-blank border-base border-bw rounded-base shadow-shadow;
+  }
+
+  .brutal-hover {
+    @apply transition-all duration-100 hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none;
+  }
+
+  .brutal-active {
+    @apply active:translate-x-boxShadowX active:translate-y-boxShadowY active:shadow-none;
   }
 }

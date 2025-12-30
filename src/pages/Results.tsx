@@ -4,16 +4,13 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { scheduleSleepReminder } from "@/utils/notificationUtils";
-import { useSettings } from "@/contexts/SettingsContext";
-import { useToast } from "@/hooks/use-toast";
+import { Badge } from "@/components/ui/badge";
 import { useTranslation } from "react-i18next";
+import { Moon, Clock, Sparkles, ArrowRight, RotateCcw } from "lucide-react";
 
 interface SleepResults {
   bedtime: string;
@@ -31,8 +28,6 @@ interface SleepResults {
 const Results = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { settings } = useSettings();
-  const { toast } = useToast();
   const { t } = useTranslation();
 
   // Get calculation results from navigation state
@@ -51,23 +46,18 @@ const Results = () => {
   const {
     bedtime,
     wakeupTime,
-    latency,
-    cycleLength,
     completeCycles,
     partialCycle,
     totalSleepMinutes,
     adjustedBedtime,
-    idealBedtimes,
     idealWakeupTimes,
   } = results;
-
-  console.log(completeCycles);
 
   // Calculate hours and minutes for display
   const hours = Math.floor(totalSleepMinutes / 60);
   const minutes = totalSleepMinutes % 60;
 
-  // Format times for display (optional)
+  // Format times for display
   const formatTimeForDisplay = (timeString: string) => {
     try {
       const [hours, minutes] = timeString.split(":");
@@ -77,164 +67,126 @@ const Results = () => {
         hour: "numeric",
         minute: "2-digit",
       });
-    } catch (e) {
+    } catch {
       return timeString;
-    }
-  };
-
-  // Handle setting up a notification
-  const handleSetupNotification = () => {
-    if (idealBedtimes.length > 0) {
-      scheduleSleepReminder(new Date(idealBedtimes[0]), 30);
-      toast({
-        title: t("results.notification.scheduled"),
-        description: t("results.notification.reminder_info", {
-          time: formatTimeForDisplay(idealBedtimes[0]),
-        }),
-      });
     }
   };
 
   // Determine quality of sleep based on number of complete cycles
   const getSleepQuality = (cycles: number) => {
-    if (cycles >= 5) return t("results.quality.excellent");
-    if (cycles >= 4) return t("results.quality.good");
-    if (cycles >= 3) return t("results.quality.adequate");
-    return t("results.quality.poor");
+    if (cycles >= 5) return { label: t("results.quality.excellent"), variant: "default" as const, color: "bg-green-500" };
+    if (cycles >= 4) return { label: t("results.quality.good"), variant: "default" as const, color: "bg-main" };
+    if (cycles >= 3) return { label: t("results.quality.adequate"), variant: "secondary" as const, color: "bg-yellow-400" };
+    return { label: t("results.quality.poor"), variant: "destructive" as const, color: "bg-destructive" };
   };
+
+  const quality = getSleepQuality(completeCycles);
 
   return (
     <div className="page-container">
       <div className="w-full max-w-md px-4 py-8">
-        <h1 className="text-3xl font-bold text-center mb-8 text-primary">
-          {t("results.title")}
-        </h1>
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold uppercase tracking-tight mb-2">
+            {t("results.title")}
+          </h1>
+          <p className="text-muted-foreground">
+            {t("results.based_on", {
+              bedtime: formatTimeForDisplay(bedtime),
+              wakeup: formatTimeForDisplay(wakeupTime),
+            })}
+          </p>
+        </div>
 
+        {/* Main Results Card */}
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle>{t("results.summary")}</CardTitle>
-            <CardDescription>
-              {t("results.based_on", {
-                bedtime: formatTimeForDisplay(bedtime),
-                wakeup: formatTimeForDisplay(wakeupTime),
-              })}
-            </CardDescription>
+            <CardTitle className="flex items-center gap-2">
+              <Moon className="w-5 h-5" strokeWidth={2.5} />
+              {t("results.summary")}
+            </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-6">
-              <div>
-                <h3 className="font-medium mb-2">
-                  {t("results.total_duration")}
-                </h3>
-                <p className="text-2xl font-bold">
-                  {hours}h {minutes}m
-                </p>
-              </div>
+          <CardContent className="space-y-6">
+            {/* Total Duration */}
+            <div className="text-center p-6 rounded-base border-base border-bw bg-main text-main-foreground">
+              <p className="text-5xl font-bold">
+                {hours}h {minutes}m
+              </p>
+              <p className="text-sm uppercase font-medium mt-2 opacity-80">
+                {t("results.total_duration")}
+              </p>
+            </div>
 
-              <div>
-                <div className="flex justify-between mb-2">
-                  <h3 className="font-medium">{t("results.sleep_cycles")}</h3>
-                  <span className="text-sm">
-                    {t("results.complete_cycles", {
-                      complete: completeCycles,
-                      partial: Math.round(partialCycle * 100),
-                    })}
-                  </span>
-                </div>
-                <div className="grid grid-cols-5 gap-1 mb-2">
-                  {Array.from({ length: 5 }).map((_, i) => {
-                    if (i < Math.floor(completeCycles)) {
-                      return (
-                        <div key={i} className="h-3 rounded bg-sleep-deep" />
-                      );
-                    }
-                    if (i === Math.floor(completeCycles) && partialCycle > 0) {
-                      return (
-                        <div
-                          key={i}
-                          className="h-3 rounded bg-gradient-to-r from-sleep-deep to-yellow-400"
-                        />
-                      );
-                    }
-                    return <div key={i} className="h-3 rounded bg-muted" />;
+            {/* Sleep Cycles Visual */}
+            <div>
+              <div className="flex justify-between mb-3">
+                <h3 className="font-bold uppercase">{t("results.sleep_cycles")}</h3>
+                <Badge variant={quality.variant}>
+                  {t("results.complete_cycles", {
+                    complete: completeCycles,
+                    partial: Math.round(partialCycle * 100),
                   })}
-                </div>
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>{t("results.quality.poor")}</span>
-                  <span>{t("results.quality.adequate")}</span>
-                  <span>{t("results.quality.excellent")}</span>
-                </div>
+                </Badge>
               </div>
+              <div className="grid grid-cols-6 gap-2 mb-3">
+                {Array.from({ length: 6 }).map((_, i) => {
+                  const isComplete = i < Math.floor(completeCycles);
+                  const isPartial = i === Math.floor(completeCycles) && partialCycle > 0;
 
-              <div>
-                <h3 className="font-medium mb-2">
-                  {t("results.quality.title")}
-                </h3>
-                <p className="text-lg font-semibold">
-                  {getSleepQuality(completeCycles)}
+                  return (
+                    <div
+                      key={i}
+                      className={`h-12 rounded-base border-base border-bw flex items-center justify-center font-bold transition-all ${
+                        isComplete
+                          ? "bg-main text-main-foreground shadow-shadow"
+                          : isPartial
+                          ? "bg-yellow-400 text-black shadow-shadow"
+                          : "bg-secondary"
+                      }`}
+                    >
+                      {i + 1}
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="flex justify-between text-xs uppercase font-medium text-muted-foreground">
+                <span>{t("results.quality.poor")}</span>
+                <span>{t("results.quality.adequate")}</span>
+                <span>{t("results.quality.excellent")}</span>
+              </div>
+            </div>
+
+            {/* Quality Badge */}
+            <div className="p-4 rounded-base border-base border-bw bg-secondary">
+              <h3 className="font-bold uppercase mb-2">{t("results.quality.title")}</h3>
+              <Badge variant={quality.variant} className="text-base px-4 py-2">
+                <Sparkles className="w-4 h-4 mr-2" />
+                {quality.label}
+              </Badge>
+            </div>
+
+            {/* Suggestion */}
+            <div className="p-4 rounded-base border-base border-bw bg-blank">
+              <h3 className="font-bold uppercase mb-2">{t("results.suggestion.title")}</h3>
+              {completeCycles < 5 ? (
+                <p className="text-sm">
+                  {t("results.suggestion.need_more", {
+                    time: formatTimeForDisplay(adjustedBedtime),
+                  })}
                 </p>
-              </div>
-
-              <div>
-                <h3 className="font-medium mb-2">
-                  {t("results.suggestion.title")}
-                </h3>
-                {completeCycles < 5 ? (
-                  <p>
-                    {t("results.suggestion.need_more", {
-                      time: formatTimeForDisplay(adjustedBedtime),
-                    })}
-                  </p>
-                ) : (
-                  <p>{t("results.suggestion.optimal")}</p>
-                )}
-              </div>
+              ) : (
+                <p className="text-sm">{t("results.suggestion.optimal")}</p>
+              )}
             </div>
           </CardContent>
         </Card>
 
-        {/* <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>{t("results.ideal_bedtimes")}</CardTitle>
-            <CardDescription>
-              {t("results.for_wakeup", {
-                time: formatTimeForDisplay(wakeupTime),
-              })}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {idealBedtimes.map((time, index) => (
-                <div
-                  key={index}
-                  className="flex justify-between items-center p-3 border rounded-lg"
-                >
-                  <div>
-                    <p className="font-semibold">
-                      {formatTimeForDisplay(time)}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {t("results.cycles", { count: 5 - index })}
-                    </p>
-                  </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      navigate("/", { state: { bedtime: time, wakeupTime } });
-                    }}
-                  >
-                    {t("results.actions.select")}
-                  </Button>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
+        {/* Ideal Wake-up Times Card */}
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle>{t("results.ideal_wakeuptimes")}</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <Clock className="w-5 h-5" strokeWidth={2.5} />
+              {t("results.ideal_wakeuptimes")}
+            </CardTitle>
             <CardDescription>
               {t("results.for_bedtime", {
                 time: formatTimeForDisplay(bedtime),
@@ -246,46 +198,28 @@ const Results = () => {
               {idealWakeupTimes.map((time, index) => (
                 <div
                   key={index}
-                  className="flex justify-between items-center p-3 border rounded-lg"
+                  className="flex justify-between items-center p-4 rounded-base border-base border-bw bg-blank shadow-shadow transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none"
                 >
                   <div>
-                    <p className="font-semibold">
+                    <p className="text-xl font-bold">
                       {formatTimeForDisplay(time)}
                     </p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-muted-foreground uppercase">
                       {t("results.cycles", { count: index + 3 })}
                     </p>
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      navigate("/", { state: { bedtime, wakeupTime: time } });
-                    }}
-                  >
-                    {t("results.actions.select")}
-                  </Button>
+                  <ArrowRight className="w-5 h-5 text-muted-foreground" />
                 </div>
               ))}
             </div>
           </CardContent>
-        </Card> */}
+        </Card>
 
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Button className="flex-1" onClick={() => navigate("/")}>
-            {t("results.actions.new_calculation")}
-          </Button>
-
-          {/* {settings.notificationsEnabled && (
-            <Button
-              className="flex-1"
-              variant="outline"
-              onClick={handleSetupNotification}
-            >
-              {t("results.actions.remind_me")}
-            </Button>
-          )} */}
-        </div>
+        {/* Actions */}
+        <Button className="w-full h-14 text-lg" onClick={() => navigate("/")}>
+          <RotateCcw className="w-5 h-5 mr-2" />
+          {t("results.actions.new_calculation")}
+        </Button>
       </div>
     </div>
   );

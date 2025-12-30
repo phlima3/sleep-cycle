@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Card,
@@ -20,6 +20,7 @@ import {
 } from "@/utils/sleepCycleUtils";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
+import { Moon, Sunrise, Clock } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -35,9 +36,8 @@ const Index = () => {
     .toString()
     .padStart(2, "0")}`;
 
-  // Set default wake-up time to 8:00 AM if current time is before 8:00 AM,
-  // otherwise set to 8:00 AM tomorrow
-  const defaultWakeup = now.getHours() < 8 ? "08:00" : "08:00";
+  // Set default wake-up time to 8:00 AM
+  const defaultWakeup = "08:00";
 
   const [bedtime, setBedtime] = useState(currentTime);
   const [wakeupTime, setWakeupTime] = useState(defaultWakeup);
@@ -122,77 +122,89 @@ const Index = () => {
   return (
     <div className="page-container">
       <div className="w-full max-w-md px-4 py-8">
-        <h1 className="text-3xl font-bold text-center mb-8 text-primary">
-          {t("home.title")}
-        </h1>
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold uppercase tracking-tight mb-2">
+            {t("home.title")}
+          </h1>
+          <p className="text-muted-foreground">
+            {t("home.calculate.description")}
+          </p>
+        </div>
 
-        <Card>
+        <Card className="mb-6">
           <CardHeader>
-            <CardTitle>{t("home.calculate.title")}</CardTitle>
-            <CardDescription>{t("home.calculate.description")}</CardDescription>
+            <CardTitle className="flex items-center gap-2">
+              <Clock className="w-5 h-5" strokeWidth={2.5} />
+              {t("home.calculate.title")}
+            </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="flex mb-6 border rounded overflow-hidden">
-              <Button
-                variant={calculationType === "normal" ? "default" : "outline"}
-                className="flex-1 rounded-none border-0"
-                onClick={() => setCalculationType("normal")}
-              >
-                {t("home.calculation_types.normal")}
-              </Button>
+          <CardContent className="space-y-6">
+            {/* Bedtime Input */}
+            <div className="space-y-2">
+              <Label htmlFor="bedtime" className="flex items-center gap-2 text-base font-bold uppercase">
+                <Moon className="w-4 h-4" strokeWidth={2.5} />
+                {t("home.calculate.bedtime_question")}
+              </Label>
+              <Input
+                id="bedtime"
+                type="time"
+                value={bedtime}
+                onChange={(e) => setBedtime(e.target.value)}
+                className="text-lg h-14 text-center font-bold"
+                disabled={calculationType === "fromWakeup"}
+              />
             </div>
 
-            {calculationType === "normal" ||
-            calculationType === "fromWakeup" ? (
-              <div className="mb-4">
-                <Label htmlFor="bedtime">
-                  {t("home.calculate.bedtime_question")}
-                </Label>
-                <Input
-                  id="bedtime"
-                  type="time"
-                  value={bedtime}
-                  onChange={(e) => setBedtime(e.target.value)}
-                  className="mt-1"
-                  disabled={calculationType === "fromWakeup"}
-                />
-              </div>
-            ) : null}
+            {/* Wakeup Input */}
+            <div className="space-y-2">
+              <Label htmlFor="wakeup" className="flex items-center gap-2 text-base font-bold uppercase">
+                <Sunrise className="w-4 h-4" strokeWidth={2.5} />
+                {t("home.calculate.wakeup_question")}
+              </Label>
+              <Input
+                id="wakeup"
+                type="time"
+                value={wakeupTime}
+                onChange={(e) => setWakeupTime(e.target.value)}
+                className="text-lg h-14 text-center font-bold"
+                disabled={calculationType === "fromBedtime"}
+              />
+            </div>
 
-            {calculationType === "normal" ||
-            calculationType === "fromBedtime" ? (
-              <div className="mb-4">
-                <Label htmlFor="wakeup">
-                  {t("home.calculate.wakeup_question")}
-                </Label>
-                <Input
-                  id="wakeup"
-                  type="time"
-                  value={wakeupTime}
-                  onChange={(e) => setWakeupTime(e.target.value)}
-                  className="mt-1"
-                  disabled={calculationType === "fromBedtime"}
-                />
-              </div>
-            ) : null}
-
-            <div className="mb-4">
-              <Label>
+            {/* Sleep Latency Info */}
+            <div className="p-4 rounded-base border-base border-bw bg-secondary">
+              <p className="text-sm font-medium">
                 {t("home.calculate.latency_label", {
                   minutes: settings.sleepLatency,
                 })}
-              </Label>
-              <p className="text-sm text-muted-foreground mt-1">
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
                 {t("home.calculate.latency_description")}
               </p>
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full" onClick={handleCalculate}>
+            <Button className="w-full h-14 text-lg" onClick={handleCalculate}>
               {t("home.calculate.calculate_button")}
             </Button>
           </CardFooter>
         </Card>
+
+        {/* Quick Info Cards */}
+        <div className="grid grid-cols-2 gap-4">
+          <Card className="bg-main text-main-foreground">
+            <CardContent className="pt-6 text-center">
+              <p className="text-3xl font-bold">{settings.cycleLength}</p>
+              <p className="text-xs uppercase font-medium opacity-80">min/cycle</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-secondary">
+            <CardContent className="pt-6 text-center">
+              <p className="text-3xl font-bold">{settings.sleepLatency}</p>
+              <p className="text-xs uppercase font-medium opacity-80">min latency</p>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );
