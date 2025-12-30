@@ -115,6 +115,24 @@ self.addEventListener('push', (event) => {
   );
 });
 
+// Security: Validate URLs to prevent open redirect attacks
+function isAllowedUrl(url) {
+  if (!url || typeof url !== 'string') return false;
+
+  // Allow relative paths
+  if (url.startsWith('/') && !url.startsWith('//')) {
+    return true;
+  }
+
+  // Allow same-origin URLs only
+  try {
+    const parsed = new URL(url, self.location.origin);
+    return parsed.origin === self.location.origin;
+  } catch {
+    return false;
+  }
+}
+
 // Handle notification click
 self.addEventListener('notificationclick', (event) => {
   console.log('[FCM SW] Notification clicked:', event.action);
@@ -135,8 +153,9 @@ self.addEventListener('notificationclick', (event) => {
     return;
   }
 
-  // Open or focus app
-  const urlToOpen = event.notification.data?.url || '/';
+  // Open or focus app - with URL validation
+  const requestedUrl = event.notification.data?.url || '/';
+  const urlToOpen = isAllowedUrl(requestedUrl) ? requestedUrl : '/';
 
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windowClients) => {

@@ -90,7 +90,6 @@ export const requestFCMToken = async (): Promise<string | null> => {
     });
 
     if (token) {
-      console.log('[Firebase] FCM Token:', token);
       // Store token for later use (e.g., send to backend for scheduling)
       localStorage.setItem('fcm-token', token);
       return token;

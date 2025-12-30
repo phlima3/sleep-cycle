@@ -13,7 +13,6 @@ import { usePushNotifications } from '@/hooks/usePushNotifications';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from 'react-i18next';
 import { Settings as SettingsIcon, Moon, Bell, Globe, Trash2, Save, Loader2, Send, AlarmClock, Plus, X, Cloud, CloudOff } from 'lucide-react';
-import { getStoredFCMToken } from '@/lib/firebase';
 import { useReminders } from '@/hooks/useReminders';
 import { Input } from '@/components/ui/input';
 
@@ -89,21 +88,22 @@ const Settings = () => {
   };
 
   const handleTestNotification = () => {
-    const token = getStoredFCMToken();
-    if (token) {
-      navigator.clipboard.writeText(token);
-      toast({
-        title: 'FCM Token copiado!',
-        description: 'Cole no Firebase Console > Messaging > Send test message',
-      });
-    }
-
-    // Also show a local notification for immediate feedback
+    // Show a local notification for testing
     if (Notification.permission === 'granted') {
       new Notification('SleepCycle - Teste', {
-        body: 'Notificação de teste funcionando!',
+        body: 'Notificações estão funcionando!',
         icon: '/android/android-launchericon-192-192.png',
         badge: '/android/android-launchericon-96-96.png',
+      });
+      toast({
+        title: 'Notificação enviada!',
+        description: 'Verifique se a notificação apareceu no seu dispositivo.',
+      });
+    } else {
+      toast({
+        title: 'Permissão necessária',
+        description: 'Ative as notificações primeiro.',
+        variant: 'destructive',
       });
     }
   };
@@ -275,7 +275,7 @@ const Settings = () => {
                 onClick={handleTestNotification}
               >
                 <Send className="w-4 h-4 mr-2" />
-                Testar Notificação (copiar token)
+                Testar Notificação
               </Button>
             )}
 

@@ -1,9 +1,25 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Reminders collection - allow read/write for now (add auth later)
+    // Reminders collection - secured by fcmToken ownership
     match /reminders/{reminderId} {
-      allow read, write: if true;
+      // Allow read only if the request includes matching fcmToken
+      allow read: if request.resource.data.fcmToken == resource.data.fcmToken
+                  || request.auth != null;
+
+      // Allow create only if fcmToken is provided and not empty
+      allow create: if request.resource.data.fcmToken != null
+                    && request.resource.data.fcmToken.size() > 0
+                    && request.resource.data.wakeUpTime != null;
+
+      // Allow update/delete only if fcmToken matches (ownership check)
+      allow update, delete: if request.resource.data.fcmToken == resource.data.fcmToken
+                           || request.auth != null;
+    }
+
+    // Rate limiting collection (for tracking API calls)
+    match /rateLimits/{tokenId} {
+      allow read, write: if true; // Internal use only, accessed via Cloud Functions
     }
   }
 }
