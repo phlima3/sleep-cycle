@@ -87,6 +87,15 @@ Implementamos o **Brutal Sleep** (Opção B do prompt original), adaptado com um
   - Ícones atualizados para nova logo
   - Cores atualizadas para neobrutalism
 
+- [x] **Firebase Cloud Messaging** ✅
+  - Firebase SDK integrado
+  - Service worker FCM configurado (`firebase-messaging-sw.js`)
+  - Hook `usePushNotifications` para gerenciar notificações
+  - Toggle de notificações na página de Settings
+  - Suporte a mensagens foreground/background
+  - Ação de soneca (snooze) nas notificações
+  - Configuração via variáveis de ambiente (`.env`)
+
 ---
 
 ### Sprint 3-4: Core Features (4-6 semanas)
@@ -145,15 +154,24 @@ src/
 
 **Valor**: Lembretes inteligentes para horário de dormir
 
+**Status**: Base implementada com FCM ✅
+
 ```typescript
-// Fluxo
+// Infraestrutura atual (implementada)
+- Firebase Cloud Messaging configurado
+- Service worker para notificações background
+- Hook usePushNotifications pronto
+- Toggle na página Settings
+
+// Próximo: Backend para agendamento
 1. Usuário define hora de acordar (ex: 7:00)
 2. App calcula melhor horário para dormir
-3. Notificação 30min antes: "Hora de começar a relaxar"
-4. Notificação no horário: "Hora de dormir para acordar descansado"
+3. Backend agenda FCM para horário calculado
+4. Notificação 30min antes: "Hora de começar a relaxar"
+5. Notificação no horário: "Hora de dormir para acordar descansado"
 ```
 
-**Personalização**:
+**Personalização** (pendente):
 - Wind-down time (15/30/45/60 min)
 - Dias da semana específicos
 - Som da notificação
@@ -321,6 +339,7 @@ src/
   "i18n": "react-i18next (5 idiomas)",
   "charts": "Recharts",
   "pwa": "Custom Service Worker (SWR strategy)",
+  "push": "Firebase Cloud Messaging",
   "validation": "Zod",
   "testing": "Vitest + Testing Library"
 }

@@ -9,10 +9,10 @@ import { Badge } from '@/components/ui/badge';
 import { useSettings } from '@/contexts/SettingsContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useSleepHistory } from '@/contexts/SleepHistoryContext';
-import { requestNotificationPermission } from '@/utils/notificationUtils';
+import { usePushNotifications } from '@/hooks/usePushNotifications';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from 'react-i18next';
-import { Settings as SettingsIcon, Moon, Bell, Globe, Trash2, Save } from 'lucide-react';
+import { Settings as SettingsIcon, Moon, Bell, Globe, Trash2, Save, Loader2 } from 'lucide-react';
 
 const Settings = () => {
   const { settings, updateSettings } = useSettings();
@@ -20,6 +20,13 @@ const Settings = () => {
   const { clearHistory } = useSleepHistory();
   const { toast } = useToast();
   const { t } = useTranslation();
+  const {
+    isSupported: isPushSupported,
+    isEnabled: isPushEnabled,
+    isLoading: isPushLoading,
+    enableNotifications,
+    disableNotifications
+  } = usePushNotifications();
 
   const [cycleLength, setCycleLength] = useState(settings.cycleLength);
   const [sleepLatency, setSleepLatency] = useState(settings.sleepLatency);
@@ -34,29 +41,16 @@ const Settings = () => {
   }, [settings]);
 
   const handleToggleNotifications = async () => {
-    if (!notificationsEnabled) {
-      const permissionGranted = await requestNotificationPermission();
-      if (permissionGranted) {
+    if (!isPushEnabled) {
+      const success = await enableNotifications();
+      if (success) {
         setNotificationsEnabled(true);
         updateSettings({ notificationsEnabled: true });
-        toast({
-          title: t('settings.notifications.enabled'),
-          description: t('settings.notifications.enabled_description'),
-        });
-      } else {
-        toast({
-          title: t('settings.notifications.permission_denied'),
-          description: t('settings.notifications.permission_denied_description'),
-          variant: "destructive"
-        });
       }
     } else {
+      disableNotifications();
       setNotificationsEnabled(false);
       updateSettings({ notificationsEnabled: false });
-      toast({
-        title: t('settings.notifications.disabled'),
-        description: t('settings.notifications.disabled_description'),
-      });
     }
   };
 
@@ -188,20 +182,27 @@ const Settings = () => {
             {/* Notifications Toggle */}
             <div className="flex items-center justify-between p-4 rounded-base border-base border-bw bg-secondary">
               <div className="flex items-center gap-3">
-                <Bell className="w-5 h-5" strokeWidth={2.5} />
+                {isPushLoading ? (
+                  <Loader2 className="w-5 h-5 animate-spin" strokeWidth={2.5} />
+                ) : (
+                  <Bell className="w-5 h-5" strokeWidth={2.5} />
+                )}
                 <div>
                   <Label htmlFor="notifications" className="text-base font-bold">
                     {t('settings.app_preferences.reminders')}
                   </Label>
                   <p className="text-sm text-muted-foreground">
-                    {t('settings.app_preferences.reminders_info')}
+                    {isPushSupported
+                      ? t('settings.app_preferences.reminders_info')
+                      : 'Push notifications not supported'}
                   </p>
                 </div>
               </div>
               <Switch
                 id="notifications"
-                checked={notificationsEnabled}
+                checked={isPushEnabled}
                 onCheckedChange={handleToggleNotifications}
+                disabled={!isPushSupported || isPushLoading}
               />
             </div>
 

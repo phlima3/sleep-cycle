@@ -26,8 +26,14 @@ import { SleepHistoryProvider } from "@/contexts/SleepHistoryContext";
 // PWA initialization
 import { registerPWA } from "@/utils/pwaUtils";
 
+// Firebase Analytics
+import { getFirebaseAnalytics } from "@/lib/firebase";
+
 // Initialize PWA
 registerPWA();
+
+// Initialize Firebase Analytics
+getFirebaseAnalytics();
 
 const queryClient = new QueryClient();
 
