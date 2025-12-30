@@ -72,9 +72,8 @@ export const scheduleSleepReminder = (
   setTimeout(() => {
     sendNotification("Time to prepare for bed!", {
       body: `Your optimal bedtime is in ${reminderMinutesBefore} minutes`,
-      icon: "/icon-192.png",
-      badge: "/icon-192.png",
-      // Removing the vibrate property that was causing the TypeScript error
+      icon: "/android/android-launchericon-192-192.png",
+      badge: "/android/android-launchericon-96-96.png",
     });
   }, timeUntilReminder);
   

@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -20,6 +19,16 @@ export default {
 		},
 		extend: {
 			colors: {
+				// Neobrutalism semantic colors
+				main: 'var(--main)',
+				mainForeground: 'var(--main-foreground)',
+				overlay: 'var(--overlay)',
+				bg: 'var(--bg)',
+				bw: 'var(--bw)',
+				blank: 'var(--blank)',
+				text: 'var(--text)',
+
+				// Base colors
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
@@ -63,6 +72,7 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
+				// Sleep specific colors
 				sleep: {
 					light: '#B8C0E0',
 					dark: '#546BCA',
@@ -71,9 +81,26 @@ export default {
 				}
 			},
 			borderRadius: {
+				base: '5px',
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
+			},
+			borderWidth: {
+				base: '2px',
+			},
+			boxShadow: {
+				shadow: 'var(--shadow)',
+			},
+			translate: {
+				boxShadowX: 'var(--box-shadow-x)',
+				boxShadowY: 'var(--box-shadow-y)',
+				reverseBoxShadowX: 'calc(var(--box-shadow-x) * -1)',
+				reverseBoxShadowY: 'calc(var(--box-shadow-y) * -1)',
+			},
+			fontWeight: {
+				base: '500',
+				heading: '700',
 			},
 			keyframes: {
 				'accordion-down': {

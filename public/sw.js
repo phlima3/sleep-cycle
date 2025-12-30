@@ -1,13 +1,16 @@
 // Service Worker for SleepCycle PWA
+// Strategy: Stale-While-Revalidate
 
-const CACHE_NAME = 'sleep-cycle-v1';
+const CACHE_NAME = 'sleep-cycle-v2';
 const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json',
   '/favicon.ico',
-  '/icon-192.png',
-  '/icon-512.png'
+  '/image.svg',
+  '/android/android-launchericon-192-192.png',
+  '/android/android-launchericon-512-512.png',
+  '/android/android-launchericon-96-96.png'
 ];
 
 // Install event - cache all initial resources
@@ -15,7 +18,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Opened cache');
+        console.log('[SW] Caching app shell');
         return cache.addAll(urlsToCache);
       })
   );
@@ -29,6 +32,7 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheName !== CACHE_NAME) {
+            console.log('[SW] Removing old cache:', cacheName);
             return caches.delete(cacheName);
           }
         })
@@ -38,41 +42,86 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
-// Fetch event - network first, fallback to cache
+// Fetch event - Stale-While-Revalidate strategy
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    fetch(event.request)
-      .then(response => {
-        // Clone the response to put in cache
-        const responseToCache = response.clone();
+  // Skip non-GET requests
+  if (event.request.method !== 'GET') {
+    return;
+  }
 
-        caches.open(CACHE_NAME)
-          .then(cache => {
-            if (event.request.method === 'GET') {
-              cache.put(event.request, responseToCache);
+  // Skip cross-origin requests
+  if (!event.request.url.startsWith(self.location.origin)) {
+    return;
+  }
+
+  event.respondWith(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.match(event.request).then(cachedResponse => {
+        // Fetch from network in background
+        const fetchPromise = fetch(event.request)
+          .then(networkResponse => {
+            // Only cache successful responses
+            if (networkResponse && networkResponse.ok) {
+              cache.put(event.request, networkResponse.clone());
             }
+            return networkResponse;
+          })
+          .catch(() => {
+            // Network failed, return cached response if available
+            return cachedResponse;
           });
 
-        return response;
-      })
-      .catch(() => {
-        return caches.match(event.request);
-      })
+        // Return cached response immediately, or wait for network
+        return cachedResponse || fetchPromise;
+      });
+    })
   );
 });
 
+// Background Sync event
+self.addEventListener('sync', event => {
+  if (event.tag === 'sync-sleep-history') {
+    event.waitUntil(syncSleepHistory());
+  }
+});
+
+// Sync sleep history data
+async function syncSleepHistory() {
+  try {
+    // Get pending data from IndexedDB (when backend is implemented)
+    console.log('[SW] Syncing sleep history...');
+    // For now, just log - actual sync will be implemented with backend
+    return Promise.resolve();
+  } catch (error) {
+    console.error('[SW] Sync failed:', error);
+    throw error;
+  }
+}
+
 // Push notification event
 self.addEventListener('push', event => {
-  const data = event.data.json();
-  
+  let data = { title: 'SleepCycle', body: 'Hora de dormir!' };
+
+  try {
+    if (event.data) {
+      data = event.data.json();
+    }
+  } catch (e) {
+    console.error('[SW] Error parsing push data:', e);
+  }
+
   const options = {
     body: data.body,
-    icon: '/icon-192.png',
-    badge: '/icon-192.png',
+    icon: '/android/android-launchericon-192-192.png',
+    badge: '/android/android-launchericon-96-96.png',
     vibrate: [100, 50, 100],
     data: {
       url: data.url || '/'
-    }
+    },
+    actions: [
+      { action: 'open', title: 'Abrir' },
+      { action: 'close', title: 'Fechar' }
+    ]
   };
 
   event.waitUntil(
@@ -83,13 +132,18 @@ self.addEventListener('push', event => {
 // Notification click event
 self.addEventListener('notificationclick', event => {
   event.notification.close();
-  const url = event.notification.data.url;
+
+  if (event.action === 'close') {
+    return;
+  }
+
+  const url = event.notification.data?.url || '/';
 
   event.waitUntil(
     clients.matchAll({ type: 'window' }).then(windowClients => {
       // If a window client is already open, focus it
       for (const client of windowClients) {
-        if (client.url === url && 'focus' in client) {
+        if (client.url.includes(self.location.origin) && 'focus' in client) {
           return client.focus();
         }
       }

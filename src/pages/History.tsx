@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 import { useSleepHistory } from "@/contexts/SleepHistoryContext";
 import {
   BarChart,
@@ -21,6 +22,7 @@ import {
   Line,
 } from "recharts";
 import { useTranslation } from "react-i18next";
+import { History as HistoryIcon, BarChart3, TrendingUp, Calendar } from "lucide-react";
 
 interface ChartData {
   date: string;
@@ -39,13 +41,19 @@ const History = () => {
     return (
       <div className="page-container">
         <div className="w-full max-w-4xl px-4 py-8">
-          <h1 className="text-3xl font-bold text-center mb-8 text-primary">
-            {t("history.title")}
-          </h1>
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold uppercase tracking-tight mb-2">
+              {t("history.title")}
+            </h1>
+          </div>
           <Card>
-            <CardContent className="py-12">
-              <p className="text-center text-muted-foreground">
+            <CardContent className="py-16 text-center">
+              <HistoryIcon className="w-16 h-16 mx-auto mb-4 text-muted-foreground" strokeWidth={1.5} />
+              <p className="text-xl font-bold uppercase mb-2">
                 {t("history.empty_state")}
+              </p>
+              <p className="text-muted-foreground">
+                Start tracking your sleep to see your patterns here
               </p>
             </CardContent>
           </Card>
@@ -56,12 +64,10 @@ const History = () => {
 
   // Prepare data for charts
   const prepareChartData = (): ChartData[] => {
-    // Sort history by date (newest first)
     const sortedHistory = [...history].sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 
-    // Filter by date range
     let filteredHistory = sortedHistory;
     const now = new Date();
 
@@ -79,31 +85,23 @@ const History = () => {
       );
     }
 
-    // Transform data for charts
     return filteredHistory.map((entry) => {
-      // Parse times to calculate duration
       const [bedHours, bedMinutes] = entry.bedtime.split(":").map(Number);
-      const [wakeupHours, wakeupMinutes] = entry.wakeupTime
-        .split(":")
-        .map(Number);
+      const [wakeupHours, wakeupMinutes] = entry.wakeupTime.split(":").map(Number);
 
-      // Create JavaScript Date objects
       const bedtimeDate = new Date();
       bedtimeDate.setHours(bedHours, bedMinutes, 0, 0);
 
       const wakeupDate = new Date();
       wakeupDate.setHours(wakeupHours, wakeupMinutes, 0, 0);
 
-      // If wakeup time is earlier than bedtime, assume it's the next day
       if (wakeupDate < bedtimeDate) {
         wakeupDate.setDate(wakeupDate.getDate() + 1);
       }
 
-      // Calculate duration in hours
       const durationHours =
         (wakeupDate.getTime() - bedtimeDate.getTime()) / (1000 * 60 * 60);
 
-      // Format date for display
       const formattedDate = new Date(entry.date).toLocaleDateString(undefined, {
         month: "short",
         day: "numeric",
@@ -119,75 +117,73 @@ const History = () => {
 
   const chartData = prepareChartData();
 
+  const FilterButton = ({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) => (
+    <button
+      className={`px-4 py-2 text-sm font-bold uppercase rounded-base border-base border-bw transition-all ${
+        active
+          ? "bg-main text-main-foreground shadow-shadow"
+          : "bg-blank hover:bg-secondary shadow-shadow hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none"
+      }`}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
+
   return (
     <div className="page-container">
       <div className="w-full max-w-4xl px-4 py-8">
-        <h1 className="text-3xl font-bold text-center mb-8 text-primary">
-          {t("history.title")}
-        </h1>
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold uppercase tracking-tight mb-2">
+            {t("history.title")}
+          </h1>
+          <Badge variant="secondary" className="text-sm">
+            {history.length} entries
+          </Badge>
+        </div>
 
-        <div className="flex justify-between items-center mb-6">
-          <div className="flex space-x-2">
-            <button
-              className={`px-3 py-1 text-sm rounded-md ${
-                dataRange === "week" ? "bg-primary text-white" : "bg-secondary"
-              }`}
-              onClick={() => setDataRange("week")}
-            >
+        {/* Filters */}
+        <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
+          <div className="flex gap-2">
+            <FilterButton active={dataRange === "week"} onClick={() => setDataRange("week")}>
               {t("history.filters.time_range.week")}
-            </button>
-            <button
-              className={`px-3 py-1 text-sm rounded-md ${
-                dataRange === "month" ? "bg-primary text-white" : "bg-secondary"
-              }`}
-              onClick={() => setDataRange("month")}
-            >
+            </FilterButton>
+            <FilterButton active={dataRange === "month"} onClick={() => setDataRange("month")}>
               {t("history.filters.time_range.month")}
-            </button>
-            <button
-              className={`px-3 py-1 text-sm rounded-md ${
-                dataRange === "all" ? "bg-primary text-white" : "bg-secondary"
-              }`}
-              onClick={() => setDataRange("all")}
-            >
+            </FilterButton>
+            <FilterButton active={dataRange === "all"} onClick={() => setDataRange("all")}>
               {t("history.filters.time_range.all")}
-            </button>
+            </FilterButton>
           </div>
 
-          <div className="flex space-x-2">
-            <button
-              className={`px-3 py-1 text-sm rounded-md ${
-                chartType === "bar" ? "bg-primary text-white" : "bg-secondary"
-              }`}
-              onClick={() => setChartType("bar")}
-            >
-              {t("history.filters.chart_type.bar")}
-            </button>
-            <button
-              className={`px-3 py-1 text-sm rounded-md ${
-                chartType === "line" ? "bg-primary text-white" : "bg-secondary"
-              }`}
-              onClick={() => setChartType("line")}
-            >
-              {t("history.filters.chart_type.line")}
-            </button>
+          <div className="flex gap-2">
+            <FilterButton active={chartType === "bar"} onClick={() => setChartType("bar")}>
+              <BarChart3 className="w-4 h-4" />
+            </FilterButton>
+            <FilterButton active={chartType === "line"} onClick={() => setChartType("line")}>
+              <TrendingUp className="w-4 h-4" />
+            </FilterButton>
           </div>
         </div>
 
+        {/* Charts Card */}
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle>{t("history.patterns.title")}</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <BarChart3 className="w-5 h-5" strokeWidth={2.5} />
+              {t("history.patterns.title")}
+            </CardTitle>
             <CardDescription>
               {t("history.patterns.description")}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="cycles">
-              <TabsList className="mb-6">
-                <TabsTrigger value="cycles">
+              <TabsList className="mb-6 w-full">
+                <TabsTrigger value="cycles" className="flex-1">
                   {t("history.patterns.tabs.cycles")}
                 </TabsTrigger>
-                <TabsTrigger value="duration">
+                <TabsTrigger value="duration" className="flex-1">
                   {t("history.patterns.tabs.duration")}
                 </TabsTrigger>
               </TabsList>
@@ -195,38 +191,46 @@ const History = () => {
               <TabsContent value="cycles" className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
                   {chartType === "bar" ? (
-                    <BarChart
-                      data={chartData}
-                      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="date" />
-                      <YAxis domain={[0, 6]} />
-                      <Tooltip />
+                    <BarChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="var(--bw)" opacity={0.2} />
+                      <XAxis dataKey="date" stroke="var(--bw)" />
+                      <YAxis domain={[0, 6]} stroke="var(--bw)" />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: "var(--blank)",
+                          border: "2px solid var(--bw)",
+                          borderRadius: "5px",
+                        }}
+                      />
                       <Legend />
                       <Bar
                         dataKey="cycles"
                         name={t("history.patterns.charts.cycles.name")}
-                        fill="#546BCA"
+                        fill="var(--main)"
+                        stroke="var(--bw)"
+                        strokeWidth={2}
                       />
                     </BarChart>
                   ) : (
-                    <LineChart
-                      data={chartData}
-                      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="date" />
-                      <YAxis domain={[0, 6]} />
-                      <Tooltip />
+                    <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="var(--bw)" opacity={0.2} />
+                      <XAxis dataKey="date" stroke="var(--bw)" />
+                      <YAxis domain={[0, 6]} stroke="var(--bw)" />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: "var(--blank)",
+                          border: "2px solid var(--bw)",
+                          borderRadius: "5px",
+                        }}
+                      />
                       <Legend />
                       <Line
                         type="monotone"
                         dataKey="cycles"
                         name={t("history.patterns.charts.cycles.name")}
-                        stroke="#546BCA"
-                        strokeWidth={2}
-                        dot={{ fill: "#304692", r: 5 }}
+                        stroke="var(--main)"
+                        strokeWidth={3}
+                        dot={{ fill: "var(--main)", stroke: "var(--bw)", strokeWidth: 2, r: 6 }}
                       />
                     </LineChart>
                   )}
@@ -236,38 +240,46 @@ const History = () => {
               <TabsContent value="duration" className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
                   {chartType === "bar" ? (
-                    <BarChart
-                      data={chartData}
-                      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="date" />
-                      <YAxis domain={[0, 12]} />
-                      <Tooltip />
+                    <BarChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="var(--bw)" opacity={0.2} />
+                      <XAxis dataKey="date" stroke="var(--bw)" />
+                      <YAxis domain={[0, 12]} stroke="var(--bw)" />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: "var(--blank)",
+                          border: "2px solid var(--bw)",
+                          borderRadius: "5px",
+                        }}
+                      />
                       <Legend />
                       <Bar
                         dataKey="duration"
                         name={t("history.patterns.charts.duration.name")}
                         fill="#9E5CF6"
+                        stroke="var(--bw)"
+                        strokeWidth={2}
                       />
                     </BarChart>
                   ) : (
-                    <LineChart
-                      data={chartData}
-                      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="date" />
-                      <YAxis domain={[0, 12]} />
-                      <Tooltip />
+                    <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="var(--bw)" opacity={0.2} />
+                      <XAxis dataKey="date" stroke="var(--bw)" />
+                      <YAxis domain={[0, 12]} stroke="var(--bw)" />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: "var(--blank)",
+                          border: "2px solid var(--bw)",
+                          borderRadius: "5px",
+                        }}
+                      />
                       <Legend />
                       <Line
                         type="monotone"
                         dataKey="duration"
                         name={t("history.patterns.charts.duration.name")}
                         stroke="#9E5CF6"
-                        strokeWidth={2}
-                        dot={{ fill: "#9E5CF6", r: 5 }}
+                        strokeWidth={3}
+                        dot={{ fill: "#9E5CF6", stroke: "var(--bw)", strokeWidth: 2, r: 6 }}
                       />
                     </LineChart>
                   )}
@@ -277,31 +289,35 @@ const History = () => {
           </CardContent>
         </Card>
 
+        {/* Recent Data Table */}
         <Card>
           <CardHeader>
-            <CardTitle>{t("history.recent_data.title")}</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <Calendar className="w-5 h-5" strokeWidth={2.5} />
+              {t("history.recent_data.title")}
+            </CardTitle>
             <CardDescription>
               {t("history.recent_data.description")}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
+              <table className="w-full">
                 <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-2 px-3">
+                  <tr className="border-b-base border-bw">
+                    <th className="text-left py-3 px-4 font-bold uppercase text-sm">
                       {t("history.recent_data.table.headers.date")}
                     </th>
-                    <th className="text-left py-2 px-3">
+                    <th className="text-left py-3 px-4 font-bold uppercase text-sm">
                       {t("history.recent_data.table.headers.bedtime")}
                     </th>
-                    <th className="text-left py-2 px-3">
+                    <th className="text-left py-3 px-4 font-bold uppercase text-sm">
                       {t("history.recent_data.table.headers.wakeup")}
                     </th>
-                    <th className="text-left py-2 px-3">
+                    <th className="text-left py-3 px-4 font-bold uppercase text-sm">
                       {t("history.recent_data.table.headers.cycles")}
                     </th>
-                    <th className="text-left py-2 px-3">
+                    <th className="text-left py-3 px-4 font-bold uppercase text-sm">
                       {t("history.recent_data.table.headers.ideal_bedtime")}
                     </th>
                   </tr>
@@ -311,7 +327,6 @@ const History = () => {
                     const date = new Date(entry.date);
                     const formattedDate = date.toLocaleDateString();
 
-                    // Format times for display
                     const formatTime = (timeString: string) => {
                       const [hours, minutes] = timeString.split(":");
                       const time = new Date();
@@ -323,21 +338,16 @@ const History = () => {
                     };
 
                     return (
-                      <tr key={index} className="border-b">
-                        <td className="py-2 px-3">{formattedDate}</td>
-                        <td className="py-2 px-3">
-                          {formatTime(entry.bedtime)}
+                      <tr key={index} className="border-b border-bw/20 hover:bg-secondary transition-colors">
+                        <td className="py-3 px-4 font-medium">{formattedDate}</td>
+                        <td className="py-3 px-4">{formatTime(entry.bedtime)}</td>
+                        <td className="py-3 px-4">{formatTime(entry.wakeupTime)}</td>
+                        <td className="py-3 px-4">
+                          <Badge variant="secondary">
+                            {entry.completeCycles} + {Math.round(entry.partialCycle * 100)}%
+                          </Badge>
                         </td>
-                        <td className="py-2 px-3">
-                          {formatTime(entry.wakeupTime)}
-                        </td>
-                        <td className="py-2 px-3">
-                          {entry.completeCycles} +{" "}
-                          {Math.round(entry.partialCycle * 100)}%
-                        </td>
-                        <td className="py-2 px-3">
-                          {formatTime(entry.idealBedtime)}
-                        </td>
+                        <td className="py-3 px-4">{formatTime(entry.idealBedtime)}</td>
                       </tr>
                     );
                   })}

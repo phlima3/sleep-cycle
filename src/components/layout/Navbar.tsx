@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -21,39 +20,39 @@ export const Navbar: React.FC = () => {
   ];
 
   return (
-    <nav className="border-b shadow-sm bg-background">
-      <div className="container mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between">
-        <div className="flex items-center space-x-2 mb-4 md:mb-0">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sleep-deep to-sleep-dream flex items-center justify-center">
-            <Moon className="text-white h-6 w-6" />
+    <nav className="border-b-base border-bw bg-blank shadow-shadow">
+      <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between">
+        <Link to="/" className="flex items-center space-x-3 mb-4 md:mb-0 group">
+          <div className="w-12 h-12 rounded-base border-base border-bw bg-main flex items-center justify-center shadow-shadow transition-all group-hover:translate-x-boxShadowX group-hover:translate-y-boxShadowY group-hover:shadow-none">
+            <Moon className="text-main-foreground h-7 w-7" />
           </div>
-          <span className="text-xl font-bold">{t('app.name')}</span>
-        </div>
-        
-        <div className="flex items-center space-x-1 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
+          <span className="text-2xl font-bold uppercase tracking-tight">{t('app.name')}</span>
+        </Link>
+
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
           {navItems.map(item => (
-            <Link 
-              key={item.path} 
+            <Link
+              key={item.path}
               to={item.path}
               className={cn(
-                "px-3 py-2 rounded-md text-sm flex items-center space-x-1 whitespace-nowrap",
-                location.pathname === item.path 
-                  ? "bg-primary text-primary-foreground" 
-                  : "hover:bg-secondary"
+                "px-4 py-2 rounded-base border-base border-bw text-sm font-bold uppercase tracking-wide flex items-center gap-2 whitespace-nowrap transition-all",
+                location.pathname === item.path
+                  ? "bg-main text-main-foreground shadow-shadow"
+                  : "bg-blank hover:bg-secondary shadow-shadow hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none"
               )}
             >
-              <item.icon className="w-4 h-4" />
-              <span>{item.label}</span>
+              <item.icon className="w-4 h-4" strokeWidth={2.5} />
+              <span className="hidden sm:inline">{item.label}</span>
             </Link>
           ))}
-          
-          <Button 
-            variant="ghost" 
-            size="icon" 
+
+          <Button
+            variant="outline"
+            size="icon"
             onClick={toggleTheme}
             className="ml-2"
           >
-            {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+            {theme === 'light' ? <Moon className="h-5 w-5" strokeWidth={2.5} /> : <Sun className="h-5 w-5" strokeWidth={2.5} />}
           </Button>
         </div>
       </div>
