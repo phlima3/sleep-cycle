@@ -333,5 +333,46 @@
     "title": "404",
     "message": "Ops! Página não encontrada",
     "return_home": "Voltar para o Início"
+  },
+  "coach": {
+    "card_title": "Coach de Sono",
+    "score": "{{score}}%",
+    "see_more": "Ver Mais",
+    "progress": "Progresso",
+    "priority": {
+      "high": "Importante",
+      "medium": "Dica",
+      "low": "Sugestão",
+      "info": "Info"
+    },
+    "insights": {
+      "variance": {
+        "title": "Horário Irregular",
+        "message_high": "Seu horário de dormir varia {{bedtimeVariance}} minutos. Tente dormir às {{suggestedBedtime}} consistentemente para melhorar a qualidade do sono.",
+        "message_moderate": "Seu horário varia cerca de {{bedtimeVariance}} minutos. Pequenas melhorias na consistência podem ajudar."
+      },
+      "weekend": {
+        "title": "Padrão de Fim de Semana",
+        "message_later": "Você dorme {{timeDifference}} minutos mais tarde nos fins de semana ({{weekendBedtime}}) vs dias úteis ({{weekdayBedtime}}). Esse 'jet lag social' pode afetar sua energia.",
+        "message_earlier": "Você dorme {{timeDifference}} minutos mais cedo nos fins de semana do que nos dias úteis."
+      },
+      "trend": {
+        "improving_title": "Ficando Mais Consistente",
+        "improving_message": "Sua consistência de horário melhorou {{change}} pontos. Continue assim!",
+        "declining_title": "Horário Menos Regular",
+        "declining_message": "Sua consistência caiu {{change}} pontos recentemente. Tente manter horários mais regulares."
+      },
+      "streak": {
+        "title": "Horário Consistente",
+        "message": "Você manteve {{score}}% de consistência por {{days}} dias. Excelente!"
+      },
+      "insufficient": {
+        "title": "Construindo Seu Perfil",
+        "message": "Registre {{requiredEntries}} ou mais noites para desbloquear insights personalizados."
+      }
+    }
+  },
+  "common": {
+    "dismiss": "Fechar"
   }
 }

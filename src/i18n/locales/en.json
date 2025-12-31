@@ -333,5 +333,46 @@
     "title": "404",
     "message": "Oops! Page not found",
     "return_home": "Return to Home"
+  },
+  "coach": {
+    "card_title": "Sleep Coach",
+    "score": "{{score}}%",
+    "see_more": "See More",
+    "progress": "Progress",
+    "priority": {
+      "high": "Important",
+      "medium": "Tip",
+      "low": "Suggestion",
+      "info": "Info"
+    },
+    "insights": {
+      "variance": {
+        "title": "Irregular Schedule",
+        "message_high": "Your bedtime varies by {{bedtimeVariance}} minutes. Try going to bed around {{suggestedBedtime}} consistently for better sleep quality.",
+        "message_moderate": "Your sleep schedule varies by about {{bedtimeVariance}} minutes. Small improvements in consistency can help."
+      },
+      "weekend": {
+        "title": "Weekend Sleep Pattern",
+        "message_later": "You sleep {{timeDifference}} minutes later on weekends ({{weekendBedtime}}) vs weekdays ({{weekdayBedtime}}). This 'social jetlag' can affect your energy levels.",
+        "message_earlier": "You sleep {{timeDifference}} minutes earlier on weekends than weekdays."
+      },
+      "trend": {
+        "improving_title": "Getting More Consistent",
+        "improving_message": "Your sleep schedule consistency has improved by {{change}} points. Keep it up!",
+        "declining_title": "Schedule Becoming Less Regular",
+        "declining_message": "Your sleep consistency has dropped by {{change}} points recently. Try to maintain more regular times."
+      },
+      "streak": {
+        "title": "Consistent Schedule",
+        "message": "You've maintained a {{score}}% consistency score for {{days}} days. Great work!"
+      },
+      "insufficient": {
+        "title": "Building Your Profile",
+        "message": "Track {{requiredEntries}} or more nights to unlock personalized sleep insights."
+      }
+    }
+  },
+  "common": {
+    "dismiss": "Dismiss"
   }
 }

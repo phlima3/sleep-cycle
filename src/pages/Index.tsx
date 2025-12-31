@@ -21,6 +21,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import { Moon, Sunrise, Clock } from "lucide-react";
+import { CoachInsightCard } from "@/features/ai-coach";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -130,6 +131,12 @@ const Index = () => {
             {t("home.calculate.description")}
           </p>
         </div>
+
+        {/* AI Sleep Coach Insight Card */}
+        <CoachInsightCard
+          className="mb-6"
+          onSeeMore={() => navigate("/history")}
+        />
 
         <Card className="mb-6">
           <CardHeader>
