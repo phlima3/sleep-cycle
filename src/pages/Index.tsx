@@ -9,8 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { TimeInput } from "@/components/ui/time-input";
 import { useSettings } from "@/contexts/SettingsContext";
 import { useSleepHistory } from "@/contexts/SleepHistoryContext";
 import {
@@ -147,36 +146,24 @@ const Index = () => {
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Bedtime Input */}
-            <div className="space-y-2">
-              <Label htmlFor="bedtime" className="flex items-center gap-2 text-base font-bold uppercase">
-                <Moon className="w-4 h-4" strokeWidth={2.5} />
-                {t("home.calculate.bedtime_question")}
-              </Label>
-              <Input
-                id="bedtime"
-                type="time"
-                value={bedtime}
-                onChange={(e) => setBedtime(e.target.value)}
-                className="text-lg h-14 text-center font-bold"
-                disabled={calculationType === "fromWakeup"}
-              />
-            </div>
+            <TimeInput
+              id="bedtime"
+              label={t("home.calculate.bedtime_question")}
+              icon={<Moon className="h-7 w-7 text-main-foreground" strokeWidth={2.5} />}
+              value={bedtime}
+              onChange={(e) => setBedtime(e.target.value)}
+              disabled={calculationType === "fromWakeup"}
+            />
 
             {/* Wakeup Input */}
-            <div className="space-y-2">
-              <Label htmlFor="wakeup" className="flex items-center gap-2 text-base font-bold uppercase">
-                <Sunrise className="w-4 h-4" strokeWidth={2.5} />
-                {t("home.calculate.wakeup_question")}
-              </Label>
-              <Input
-                id="wakeup"
-                type="time"
-                value={wakeupTime}
-                onChange={(e) => setWakeupTime(e.target.value)}
-                className="text-lg h-14 text-center font-bold"
-                disabled={calculationType === "fromBedtime"}
-              />
-            </div>
+            <TimeInput
+              id="wakeup"
+              label={t("home.calculate.wakeup_question")}
+              icon={<Sunrise className="h-7 w-7 text-main-foreground" strokeWidth={2.5} />}
+              value={wakeupTime}
+              onChange={(e) => setWakeupTime(e.target.value)}
+              disabled={calculationType === "fromBedtime"}
+            />
 
             {/* Sleep Latency Info */}
             <div className="p-4 rounded-base border-base border-bw bg-secondary">
